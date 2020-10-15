@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myFlutterApp/screens/users_view.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class FormScreenState extends State<MyHomePage> {
           return null;
         },
         onSaved: (value) => setState(() => password = value),
-  );
+      );
 
   Widget buildPhoneNumber() => TextFormField(
       decoration: InputDecoration(labelText: 'Enter Phone Number'),
@@ -69,8 +70,7 @@ class FormScreenState extends State<MyHomePage> {
         return null;
       },
       onSaved: (value) =>
-          setState(() => phoneNumber = value.toString().trim())
-  );
+          setState(() => phoneNumber = value.toString().trim()));
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -100,10 +100,11 @@ class FormScreenState extends State<MyHomePage> {
                 buildPhoneNumber(),
                 SizedBox(height: 5),
                 RaisedButton(
+                    color: Colors.blue,
+                    textColor: Colors.white,
                     child: Text(
                       'SUBMIT',
                       style: TextStyle(
-                        color: Colors.black,
                         fontSize: 16,
                       ),
                     ),
@@ -121,5 +122,49 @@ class FormScreenState extends State<MyHomePage> {
             ),
           ),
         ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image:  AssetImage('assets/images/test.jpg'))
+                ),
+                  child: Stack(children: <Widget>[
+                    Positioned(
+                        bottom: 12.0,
+                        left: 16.0,
+                        child: Text("U.M.S",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w500))),
+                  ])
+              ),
+              ListTile(
+                title: Text('View Users List'),
+                onTap: () {
+                  navigateToUsersView(context);
+                },
+              ),
+              ListTile(
+                title: Text('Update User Info'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
       );
+
+  Future navigateToUsersView(context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UsersView()));
+  }
 }
