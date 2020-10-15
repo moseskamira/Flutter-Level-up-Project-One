@@ -75,7 +75,7 @@ class FormScreenState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("FlutterApp"),
+          title: Text("USER MANAGEMENT SYSTEM"),
         ),
         body: Container(
           margin: EdgeInsets.all(16),
@@ -87,7 +87,7 @@ class FormScreenState extends State<MyHomePage> {
                 Container(
                   padding: const EdgeInsets.all(8),
                   alignment: Alignment.center,
-                  child: Text('USER REGISTRATION FORM',
+                  child: Text('USER REG FORM',
                       style: TextStyle(
                         fontSize: 24,
                         color: Colors.black,
@@ -102,11 +102,14 @@ class FormScreenState extends State<MyHomePage> {
                 RaisedButton(
                     color: Colors.blue,
                     textColor: Colors.white,
+
                     child: Text(
-                      'SUBMIT',
+                      'Submit'.toUpperCase(),
                       style: TextStyle(
                         fontSize: 16,
+
                       ),
+
                     ),
                     onPressed: () {
                       if (!_formKey.currentState.validate()) {
@@ -131,16 +134,16 @@ class FormScreenState extends State<MyHomePage> {
                   color: Colors.blue,
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        image:  AssetImage('assets/images/test.jpg'))
+                        image:  AssetImage('assets/images/user.jpeg'))
                 ),
                   child: Stack(children: <Widget>[
                     Positioned(
-                        bottom: 12.0,
+                        bottom: 4.0,
                         left: 16.0,
-                        child: Text("U.M.S",
+                        child: Text('USER MANAGEMENT SYSTEM',
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
+                                color: Colors.white,
+                                fontSize: 16.0,
                                 fontWeight: FontWeight.w500))),
                   ])
               ),
