@@ -7,6 +7,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class FormScreenState extends State<MyHomePage> {
+  String dropdownValue;
+  List<String> spinnerItems = ['Male', 'Female'];
   final _formKey = GlobalKey<FormState>();
   String userName;
   String email;
@@ -72,6 +74,22 @@ class FormScreenState extends State<MyHomePage> {
       onSaved: (value) =>
           setState(() => phoneNumber = value.toString().trim()));
 
+  Widget buildGenderDropDownWidget() => DropdownButton(
+        hint: Text('Select Gender:'),
+        value: dropdownValue,
+        onChanged: (newValue) {
+          setState(() {
+            dropdownValue = newValue;
+          });
+        },
+        items: spinnerItems.map((gender) {
+          return DropdownMenuItem(
+            child: new Text(gender),
+            value: gender,
+          );
+        }).toList(),
+      );
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -98,18 +116,36 @@ class FormScreenState extends State<MyHomePage> {
                 buildEmail(),
                 buildPassword(),
                 buildPhoneNumber(),
+                new Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Expanded(
+                      child: new Padding(
+                        padding: EdgeInsets.zero,
+                        child: Text('Gender:'),
+                      ),
+                    ),
+                    Expanded(
+                      child: new Padding(
+                        padding: EdgeInsets.zero,
+                        child: Container(
+                          height: 40,
+                          padding: EdgeInsets.zero,
+                          child: buildGenderDropDownWidget(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 5),
                 RaisedButton(
                     color: Colors.blue,
                     textColor: Colors.white,
-
                     child: Text(
                       'Submit'.toUpperCase(),
                       style: TextStyle(
                         fontSize: 16,
-
                       ),
-
                     ),
                     onPressed: () {
                       if (!_formKey.currentState.validate()) {
@@ -118,8 +154,8 @@ class FormScreenState extends State<MyHomePage> {
                       _formKey.currentState.save();
                       print(userName);
                       print(email);
-                      print(password);
-                      print(Icons.phone);
+                      print(dropdownValue.toUpperCase());
+                      print(phoneNumber);
                     })
               ],
             ),
@@ -130,12 +166,11 @@ class FormScreenState extends State<MyHomePage> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                    image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image:  AssetImage('assets/images/user.jpeg'))
-                ),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage('assets/images/user.jpeg'))),
                   child: Stack(children: <Widget>[
                     Positioned(
                         bottom: 4.0,
@@ -145,8 +180,7 @@ class FormScreenState extends State<MyHomePage> {
                                 color: Colors.white,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w500))),
-                  ])
-              ),
+                  ])),
               ListTile(
                 title: Text('View Users List'),
                 onTap: () {

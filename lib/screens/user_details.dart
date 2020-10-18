@@ -37,7 +37,7 @@ class DetailScreen extends StatelessWidget {
                     fontFamily: 'Aleo',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.normal,
-                    fontSize: 25.0,
+                    fontSize: 24.0,
                     color: Colors.black
                 ),
               ),
@@ -49,7 +49,7 @@ class DetailScreen extends StatelessWidget {
                     fontFamily: 'Aleo',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.bold,
-                    fontSize: 25.0,
+                    fontSize: 24.0,
                     color: Colors.black
                 ),
               ),
@@ -61,7 +61,7 @@ class DetailScreen extends StatelessWidget {
                     fontFamily: 'Aleo',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.normal,
-                    fontSize: 25.0,
+                    fontSize: 24.0,
                     color: Colors.black
                 ),
               ),
@@ -73,7 +73,7 @@ class DetailScreen extends StatelessWidget {
                     fontFamily: 'Aleo',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.normal,
-                    fontSize: 25.0,
+                    fontSize: 24.0,
                     color: Colors.black
                 ),
               ),
