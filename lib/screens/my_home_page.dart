@@ -9,16 +9,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class FormScreenState extends State<MyHomePage> {
-  String dropdownValue;
   List<String> spinnerItems = ['Male', 'Female'];
   List nationality = ["Ugandan", "Other"];
-  String selectedNationality;
-
   final _formKey = GlobalKey<FormState>();
-  String userName;
-  String email;
-  String password;
-  String phoneNumber;
+  String dropdownValue, selectedNationality, userName, email, password, phoneNumber;
 
   Widget buildUserName() => TextFormField(
         decoration: InputDecoration(labelText: 'Enter Name'),
@@ -95,152 +89,129 @@ class FormScreenState extends State<MyHomePage> {
         }).toList(),
       );
 
+  Widget buildDropDownRow()=> Row(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Expanded(
+        child: new Padding(
+          padding: EdgeInsets.zero,
+          child: Text('Gender:'),
+        ),
+      ),
+      Expanded(
+        child: new Padding(
+          padding: EdgeInsets.zero,
+          child: Container(
+            height: 40,
+            padding: EdgeInsets.zero,
+            child: buildGenderDropDownWidget(),
+          ),
+        ),
+      ),
+    ],
+  );
+
+  Widget buildUgandanRadioBtn()=> Row(
+    children: <Widget>[
+      Radio(
+        activeColor: Theme.of(context).primaryColor,
+        value: nationality[0],
+        groupValue: selectedNationality,
+        onChanged: (value) {
+          setState(() {
+            print(value);
+            selectedNationality = value;
+          });
+        },
+      ),
+      Text("Ugandan"),
+    ],
+  );
+
+  Widget buildOtherOptionRadioBtn()=>Row(
+    children: <Widget>[
+      Radio(
+        activeColor: Theme.of(context).primaryColor,
+        value: nationality[1],
+        groupValue: selectedNationality,
+        onChanged: (value) {
+          setState(() {
+            print(value);
+            selectedNationality = value;
+          });
+        },
+      ),
+      Text("Other")
+    ],
+  );
+
+  Widget buildRadioBtnRow()=>Row(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Text('Nationality:'),
+      buildUgandanRadioBtn(),
+      buildOtherOptionRadioBtn(),
+    ],
+  );
+
+  Widget buildSubmitRegBtn()=> RaisedButton(
+      color: Colors.blue,
+      textColor: Colors.white,
+      child: Text(
+        'Submit'.toUpperCase(),
+        style: TextStyle(
+          fontSize: 16,
+        ),
+      ),
+      onPressed: () {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        _formKey.currentState.save();
+        print(selectedNationality);
+        print(email);
+        print(dropdownValue.toUpperCase());
+        print(phoneNumber);
+      });
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text("USER MANAGEMENT SYSTEM"),
+          backgroundColor: Colors.green,
+          brightness: Brightness.light,
         ),
-        body: Container(
-          margin: EdgeInsets.all(16),
-          child: SingleChildScrollView(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Form(
                 key: _formKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.zero,
-                        alignment: Alignment.center,
-                        child: Text('USER REG FORM',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            )),
-                      ),
-                    ),
-                    Expanded(
-                      child: new Padding(
-                        padding: EdgeInsets.zero,
-                        child: buildUserName(),
-                      ),
-                    ),
-                    Expanded(
-                      child: new Padding(
-                        padding: EdgeInsets.zero,
-                        child: buildEmail(),
-                      ),
-                    ),
-                    Expanded(
-                      child: new Padding(
-                        padding: EdgeInsets.zero,
-                        child: buildPassword(),
-                      ),
-                    ),
-                    Expanded(
-                      child: new Padding(
-                        padding: EdgeInsets.zero,
-                        child: buildPhoneNumber(),
-                      ),
-                    ),
-                    new Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: new Padding(
-                            padding: EdgeInsets.zero,
-                            child: Text('Gender:'),
-                          ),
-                        ),
-                        Expanded(
-                          child: new Padding(
-                            padding: EdgeInsets.zero,
-                            child: Container(
-                              height: 40,
-                              padding: EdgeInsets.zero,
-                              child: buildGenderDropDownWidget(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    new Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: new Padding(
-                            padding: EdgeInsets.zero,
-                            child: Text('Nationality:'),
-                          ),
-                        ),
-                        Expanded(
-                          child: new Row(
-                            children: <Widget>[
-                              Radio(
-                                activeColor: Theme.of(context).primaryColor,
-                                value: nationality[0],
-                                groupValue: selectedNationality,
-                                onChanged: (value) {
-                                  setState(() {
-                                    print(value);
-                                    selectedNationality = value;
-                                  });
-                                },
-                              ),
-                              Text("Ugandan"),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: new Row(
-                            children: <Widget>[
-                              Radio(
-                                activeColor: Theme.of(context).primaryColor,
-                                value: nationality[1],
-                                groupValue: selectedNationality,
-                                onChanged: (value) {
-                                  setState(() {
-                                    print(value);
-                                    selectedNationality = value;
-                                  });
-                                },
-                              ),
-                              Text("Other")
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 16),
+                    Text('USER REG FORM',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.black,
+                        )),
+                    buildUserName(),
+                    buildEmail(),
+                    buildPassword(),
+                    buildPhoneNumber(),
+                    buildDropDownRow(),
+                    buildRadioBtnRow(),
                     SizedBox(height: 5),
-                    RaisedButton(
-                        color: Colors.blue,
-                        textColor: Colors.white,
-                        child: Text(
-                          'Submit'.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        onPressed: () {
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          }
-                          _formKey.currentState.save();
-                          print(selectedNationality);
-                          print(email);
-                          print(dropdownValue.toUpperCase());
-                          print(phoneNumber);
-                        })
+                    buildSubmitRegBtn(),
                   ],
                 ),
               ),
             ),
           ),
-        ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
