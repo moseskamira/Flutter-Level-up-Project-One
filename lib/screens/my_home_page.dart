@@ -12,7 +12,12 @@ class FormScreenState extends State<MyHomePage> {
   List<String> spinnerItems = ['Male', 'Female'];
   List nationality = ["Ugandan", "Other"];
   final _formKey = GlobalKey<FormState>();
-  String dropdownValue, selectedNationality, userName, email, password, phoneNumber;
+  String dropdownValue,
+      selectedNationality,
+      userName,
+      email,
+      password,
+      phoneNumber;
 
   Widget buildUserName() => TextFormField(
         decoration: InputDecoration(labelText: 'Enter Name'),
@@ -89,74 +94,72 @@ class FormScreenState extends State<MyHomePage> {
         }).toList(),
       );
 
-  Widget buildDropDownRow()=> Row(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      Expanded(
-        child: new Padding(
-          padding: EdgeInsets.zero,
-          child: Text('Gender:'),
-        ),
-      ),
-      Expanded(
-        child: new Padding(
-          padding: EdgeInsets.zero,
-          child: Container(
-            height: 40,
-            padding: EdgeInsets.zero,
-            child: buildGenderDropDownWidget(),
+  Widget buildDropDownRow() => Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Expanded(
+            child: new Padding(
+              padding: EdgeInsets.zero,
+              child: Text('Gender:'),
+            ),
           ),
-        ),
-      ),
-    ],
-  );
+          Expanded(
+            child: new Padding(
+              padding: EdgeInsets.zero,
+              child: Container(
+                height: 40,
+                padding: EdgeInsets.zero,
+                child: buildGenderDropDownWidget(),
+              ),
+            ),
+          ),
+        ],
+      );
 
-  Widget buildUgandanRadioBtn()=> Row(
-    children: <Widget>[
-      Radio(
-        activeColor: Theme.of(context).primaryColor,
-        value: nationality[0],
-        groupValue: selectedNationality,
-        onChanged: (value) {
-          setState(() {
-            print(value);
-            selectedNationality = value;
-          });
-        },
-      ),
-      Text("Ugandan"),
-    ],
-  );
+  Widget buildUgandanRadioBtn() => Row(
+        children: <Widget>[
+          Radio(
+            activeColor: Theme.of(context).primaryColor,
+            value: nationality[0],
+            groupValue: selectedNationality,
+            onChanged: (value) {
+              setState(() {
+                selectedNationality = value;
+              });
+            },
+          ),
+          Text("Ugandan"),
+        ],
+      );
 
-  Widget buildOtherOptionRadioBtn()=>Row(
-    children: <Widget>[
-      Radio(
-        activeColor: Theme.of(context).primaryColor,
-        value: nationality[1],
-        groupValue: selectedNationality,
-        onChanged: (value) {
-          setState(() {
-            print(value);
-            selectedNationality = value;
-          });
-        },
-      ),
-      Text("Other")
-    ],
-  );
+  Widget buildOtherOptionRadioBtn() => Row(
+        children: <Widget>[
+          Radio(
+            activeColor: Theme.of(context).primaryColor,
+            value: nationality[1],
+            groupValue: selectedNationality,
+            onChanged: (value) {
+              setState(() {
+                selectedNationality = value;
+              });
+            },
+          ),
+          Text("Other")
+        ],
+      );
 
-  Widget buildRadioBtnRow()=>Row(
-    mainAxisSize: MainAxisSize.min,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      Text('Nationality:'),
-      buildUgandanRadioBtn(),
-      buildOtherOptionRadioBtn(),
-    ],
-  );
+  Widget buildRadioBtnRow() => Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text('Nationality:'),
+          buildUgandanRadioBtn(),
+          buildOtherOptionRadioBtn(),
+        ],
+      );
 
-  Widget buildSubmitRegBtn()=> RaisedButton(
+  Widget buildSubmitRegBtn() => RaisedButton(
       color: Colors.blue,
       textColor: Colors.white,
       child: Text(
@@ -165,16 +168,52 @@ class FormScreenState extends State<MyHomePage> {
           fontSize: 16,
         ),
       ),
-      onPressed: () {
-        if (!_formKey.currentState.validate()) {
-          return;
-        }
-        _formKey.currentState.save();
-        print(selectedNationality);
-        print(email);
-        print(dropdownValue.toUpperCase());
-        print(phoneNumber);
-      });
+      onPressed: processRegData,
+  );
+
+  void processRegData() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print(selectedNationality);
+    print(email);
+    print(dropdownValue.toUpperCase());
+    print(phoneNumber);
+
+  }
+
+  Widget buildHomePageTitle() => Text(
+        'USER REG FORM',
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.black,
+        ),
+      );
+
+  Widget buildDrawerHeader() => DrawerHeader(
+      decoration: BoxDecoration(
+          color: Colors.blue,
+          image: DecorationImage(
+              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))),
+      child: Stack(children: <Widget>[
+        Positioned(
+          bottom: 4.0,
+          left: 16.0,
+          child: Text(
+            'USER MANAGEMENT SYSTEM',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500),
+          ),
+        ),
+      ]));
+
+  Future navigateToUsersView(context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => UsersView()));
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -185,53 +224,34 @@ class FormScreenState extends State<MyHomePage> {
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 16),
-                    Text('USER REG FORM',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.black,
-                        )),
-                    buildUserName(),
-                    buildEmail(),
-                    buildPassword(),
-                    buildPhoneNumber(),
-                    buildDropDownRow(),
-                    buildRadioBtnRow(),
-                    SizedBox(height: 5),
-                    buildSubmitRegBtn(),
-                  ],
-                ),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 16),
+                  buildHomePageTitle(),
+                  buildUserName(),
+                  buildEmail(),
+                  buildPassword(),
+                  buildPhoneNumber(),
+                  buildDropDownRow(),
+                  buildRadioBtnRow(),
+                  SizedBox(height: 5),
+                  buildSubmitRegBtn(),
+                ],
               ),
             ),
           ),
+        ),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/images/user.jpeg'))),
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                        bottom: 4.0,
-                        left: 16.0,
-                        child: Text('USER MANAGEMENT SYSTEM',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500))),
-                  ])),
+              buildDrawerHeader(),
               ListTile(
                 title: Text('View Users List'),
                 onTap: () {
@@ -248,9 +268,4 @@ class FormScreenState extends State<MyHomePage> {
           ),
         ),
       );
-
-  Future navigateToUsersView(context) async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => UsersView()));
-  }
 }
