@@ -2,27 +2,28 @@ import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
 class User {
-  final String id;
+  final int id;
 
-  @JsonKey(name: 'employee_name')
+  @JsonKey(name: 'login')
   final String userName;
 
-  @JsonKey(name: 'employee_salary')
-  final String userSalary;
+  @JsonKey(name: 'url')
+  final String profileUrl;
 
-  @JsonKey(name: 'employee_age')
-  final String userAge;
-
-  @JsonKey(name: 'profile_image')
+  @JsonKey(name: 'avatar_url')
   final String profileImage;
 
+  @JsonKey(name: 'type')
+  final String userType;
+
+
   User(
-      this.id, this.userName, this.userSalary, this.userAge, this.profileImage);
+      this.id, this.userName, this.profileUrl, this.profileImage, this.userType);
 
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        userName = json['employee_name'],
-        userSalary = json['employee_salary'],
-        userAge = json['employee_age'],
-        profileImage = json['profile_image'];
+        userName = json['login'],
+        profileUrl = json['url'],
+        profileImage = json['avatar_url'],
+        userType = json['type'];
 }
