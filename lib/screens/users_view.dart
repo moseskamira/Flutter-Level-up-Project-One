@@ -74,11 +74,11 @@ class UsersView extends StatelessWidget {
   Widget build(BuildContext context)=> Scaffold(
       appBar: AppBar(
         title: Text('USER MANAGEMENT SYSTEM'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
       ),
       body: Center(
-        child: _usersDisplayData(),
-      ),
+       child: _usersDisplayData(),
+        ),
     );
 
 }

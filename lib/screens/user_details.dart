@@ -11,6 +11,7 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('USER DETAILS'),
+        backgroundColor: Colors.green,
       ),
       body: new Container(
         color: Colors.white,
@@ -19,16 +20,10 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            // Container(
-            //   width: 200.0,
-            //   decoration: new BoxDecoration(
-            //       image: DecorationImage(
-            //           image: new AssetImage(detailedUser.profileImage),
-            //           fit: BoxFit.fill
-            //       ),
-            //       shape: BoxShape.circle
-            //   ),
-            // ),
+            Container(
+                child: Image(image: NetworkImage('https://homepages.cae.wisc.edu/~ece533/images/airplane.png'),
+                ),
+            ),
 
             Container(
               child:Text(detailedUser.id,
