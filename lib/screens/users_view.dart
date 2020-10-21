@@ -9,7 +9,7 @@ const url = "https://api.github.com/";
 
 class UsersView extends StatelessWidget {
   String getPath() {
-    return url + "search/users?q=type:User+location:Nairobi+language:JAVA";
+    return url + "search/users?q=type:User+location:Kampala+language:JAVA";
   }
 
   ListView createUsersListView(usersList) => ListView.builder(
@@ -22,8 +22,15 @@ class UsersView extends StatelessWidget {
                   fontSize: 20,
                 )),
             subtitle: Text(usersList[index].profileUrl),
-            leading: Image(image: NetworkImage(usersList[index].profileImage)
-            ),
+            leading: Container(
+                width: 80.0,
+                height: 80.0,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(usersList[index].profileImage),
+                    ))),
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -47,25 +54,26 @@ class UsersView extends StatelessWidget {
     }
   }
 
-  FutureBuilder usersDisplayData()=> FutureBuilder<List<User>>(
-      future: getUsers(),
-      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
-        if (snapshot.hasData) {
-          List<User> users = snapshot.data;
-          print('THIRD USER IN LIST:'+ users.elementAt(2).userName);
-          return createUsersListView(users);
-        } else if (snapshot.hasError) {
-          if(snapshot.error.toString().contains('Failed host lookup')) {
-            return Text('Bad or No Connection');
-          }else if(snapshot.error.toString().contains('Connection refused')) {
-            return Text('Insufficient or No Data');
+  FutureBuilder usersDisplayData() => FutureBuilder<List<User>>(
+        future: getUsers(),
+        builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
+          if (snapshot.hasData) {
+            List<User> users = snapshot.data;
+            print('THIRD USER IN LIST:' + users.elementAt(2).userName);
+            return createUsersListView(users);
+          } else if (snapshot.hasError) {
+            if (snapshot.error.toString().contains('Failed host lookup')) {
+              return Text('Bad or No Connection');
+            } else if (snapshot.error
+                .toString()
+                .contains('Connection refused')) {
+              return Text('Insufficient or No Data');
+            }
+            return Text("${snapshot.error}");
           }
-          return Text("${snapshot.error}");
-        }
-        return CircularProgressIndicator();
-      },
-    );
-
+          return CircularProgressIndicator();
+        },
+      );
 
   @override
   Widget build(BuildContext context) => Scaffold(
