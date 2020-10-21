@@ -28,6 +28,7 @@ dependencies:
   retrofit: any
   logger: any
   dio: 2.2.2
+  file_picker: ^1.0.0
 
   cupertino_icons: ^1.0.0
 

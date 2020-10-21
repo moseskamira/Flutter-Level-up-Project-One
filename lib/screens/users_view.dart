@@ -5,80 +5,76 @@ import 'dart:convert';
 
 import '../models/user_model.dart';
 
-const url = "http://dummy.restapiexample.com/";
+const url = "https://api.github.com/";
 
 class UsersView extends StatelessWidget {
   String getPath() {
-    return url + "api/v1/employees";
+    return url + "search/users?q=type:User+location:Nairobi+language:JAVA";
   }
 
-  ListView _createUsersListView(usersList) {
-    return ListView.builder(
+  ListView createUsersListView(usersList) => ListView.builder(
         itemCount: usersList.length,
-        itemBuilder: (context, index) {
-          return Card(
-              child: ListTile(
-                title: Text(usersList[index].userName,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                    )),
-                subtitle: Text(usersList[index].userSalary),
-                leading: Icon(
-                  Icons.work,
-                  color: Colors.blue[500],
-                ),
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(detailedUser: usersList[index]),
-                    ),
-                  );
-                },
+        itemBuilder: (context, index) => Card(
+          child: ListTile(
+            title: Text(usersList[index].userName,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                )),
+            subtitle: Text(usersList[index].profileUrl),
+            leading: Image(image: NetworkImage(usersList[index].profileImage)
+            ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    DetailScreen(detailedUser: usersList[index]),
               ),
-
-
-          );
-        }
-    );
-  }
+            ),
+          ),
+        ),
+      );
 
   Future<List<User>> getUsers() async {
     final result = await http.get(getPath());
     if (result.statusCode == 200) {
       var json = jsonDecode(result.body);
-      List jsonData = json['data'];
+      List jsonData = json['items'];
       print(jsonData.toString());
-      return jsonData.map((users) => new User.fromJson(users)).toList();
-
+      return jsonData.map((users) => User.fromJson(users)).toList();
     } else {
       throw Exception('Failed To Fetch Data');
     }
   }
 
-  FutureBuilder _usersDisplayData(){
-    return FutureBuilder<List<User>>(
+  FutureBuilder usersDisplayData()=> FutureBuilder<List<User>>(
       future: getUsers(),
-      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot){
+      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
         if (snapshot.hasData) {
           List<User> users = snapshot.data;
-          return _createUsersListView(users);
+          print('THIRD USER IN LIST:'+ users.elementAt(2).userName);
+          return createUsersListView(users);
         } else if (snapshot.hasError) {
+          if(snapshot.error.toString().contains('Failed host lookup')) {
+            return Text('Bad or No Connection');
+          }else if(snapshot.error.toString().contains('Connection refused')) {
+            return Text('Insufficient or No Data');
+          }
           return Text("${snapshot.error}");
         }
         return CircularProgressIndicator();
       },
     );
-  }
 
 
   @override
-  Widget build(BuildContext context)=> Scaffold(
-      appBar: AppBar(
-        title: Text('USER MANAGEMENT SYSTEM'),
-        backgroundColor: Colors.green,
-      ),
-      body: Center(
-       child: _usersDisplayData(),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text('USER MANAGEMENT SYSTEM'),
+          backgroundColor: Colors.green,
         ),
-    );
-
+        body: Center(
+          child: usersDisplayData(),
+        ),
+      );
 }

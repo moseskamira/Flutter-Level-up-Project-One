@@ -5,10 +5,10 @@ import 'package:myFlutterApp/screens/users_view.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => FormScreenState();
+  State<StatefulWidget> createState() => _FormScreenState();
 }
 
-class FormScreenState extends State<MyHomePage> {
+class _FormScreenState extends State<MyHomePage> {
   List<String> spinnerItems = ['Male', 'Female'];
   List nationality = ["Ugandan", "Other"];
   final _formKey = GlobalKey<FormState>();
@@ -80,40 +80,24 @@ class FormScreenState extends State<MyHomePage> {
 
   Widget buildGenderDropDownWidget() => DropdownButton(
         hint: Text('Select Gender:'),
+        items: spinnerItems
+            .map(
+              (gender) => DropdownMenuItem(
+                child: Text(gender),
+                value: gender,
+              ),
+            )
+            .toList(),
         value: dropdownValue,
-        onChanged: (newValue) {
-          setState(() {
-            dropdownValue = newValue;
-          });
-        },
-        items: spinnerItems.map((gender) {
-          return DropdownMenuItem(
-            child: new Text(gender),
-            value: gender,
-          );
-        }).toList(),
+        onChanged: (newValue) => setState(() => dropdownValue = newValue),
       );
 
   Widget buildDropDownRow() => Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Expanded(
-            child: new Padding(
-              padding: EdgeInsets.zero,
-              child: Text('Gender:'),
-            ),
-          ),
-          Expanded(
-            child: new Padding(
-              padding: EdgeInsets.zero,
-              child: Container(
-                height: 40,
-                padding: EdgeInsets.zero,
-                child: buildGenderDropDownWidget(),
-              ),
-            ),
-          ),
+          Text('Gender:'),
+          buildGenderDropDownWidget(),
         ],
       );
 
@@ -124,9 +108,7 @@ class FormScreenState extends State<MyHomePage> {
             value: nationality[0],
             groupValue: selectedNationality,
             onChanged: (value) {
-              setState(() {
-                selectedNationality = value;
-              });
+              setState(() => selectedNationality = value);
             },
           ),
           Text("Ugandan"),
@@ -140,9 +122,7 @@ class FormScreenState extends State<MyHomePage> {
             value: nationality[1],
             groupValue: selectedNationality,
             onChanged: (value) {
-              setState(() {
-                selectedNationality = value;
-              });
+              setState(() => selectedNationality = value);
             },
           ),
           Text("Other")
@@ -150,26 +130,28 @@ class FormScreenState extends State<MyHomePage> {
       );
 
   Widget buildRadioBtnRow() => Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Nationality:'),
+          Text(
+            'Nationality:',
+          ),
           buildUgandanRadioBtn(),
           buildOtherOptionRadioBtn(),
         ],
       );
 
   Widget buildSubmitRegBtn() => RaisedButton(
-      color: Colors.blue,
-      textColor: Colors.white,
-      child: Text(
-        'Submit'.toUpperCase(),
-        style: TextStyle(
-          fontSize: 16,
+        color: Colors.blue,
+        textColor: Colors.white,
+        child: Text(
+          'Submit'.toUpperCase(),
+          style: TextStyle(
+            fontSize: 16,
+          ),
         ),
-      ),
-      onPressed: processRegData,
-  );
+        onPressed: processRegData,
+      );
 
   void processRegData() {
     if (!_formKey.currentState.validate()) {
@@ -180,7 +162,6 @@ class FormScreenState extends State<MyHomePage> {
     print(email);
     print(dropdownValue.toUpperCase());
     print(phoneNumber);
-
   }
 
   Widget buildHomePageTitle() => Text(
@@ -188,6 +169,7 @@ class FormScreenState extends State<MyHomePage> {
         style: TextStyle(
           fontSize: 24,
           color: Colors.black,
+          decoration: TextDecoration.underline,
         ),
       );
 
@@ -195,7 +177,8 @@ class FormScreenState extends State<MyHomePage> {
       decoration: BoxDecoration(
           color: Colors.blue,
           image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))),
+              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))
+      ),
       child: Stack(children: <Widget>[
         Positioned(
           bottom: 4.0,
@@ -224,25 +207,28 @@ class FormScreenState extends State<MyHomePage> {
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 16),
-                  buildHomePageTitle(),
-                  buildUserName(),
-                  buildEmail(),
-                  buildPassword(),
-                  buildPhoneNumber(),
-                  buildDropDownRow(),
-                  buildRadioBtnRow(),
-                  SizedBox(height: 5),
-                  buildSubmitRegBtn(),
-                ],
+          child: Container(
+            // decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            margin: const EdgeInsets.all(8),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildHomePageTitle(),
+                    buildUserName(),
+                    buildEmail(),
+                    buildPassword(),
+                    buildPhoneNumber(),
+                    buildDropDownRow(),
+                    buildRadioBtnRow(),
+                    SizedBox(height: 5),
+                    buildSubmitRegBtn(),
+                  ],
+                ),
               ),
             ),
           ),

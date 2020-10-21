@@ -21,21 +21,8 @@ class DetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-                child: Image(image: NetworkImage('https://homepages.cae.wisc.edu/~ece533/images/airplane.png'),
+                child: Image(image: NetworkImage(detailedUser.profileImage),
                 ),
-            ),
-
-            Container(
-              child:Text(detailedUser.id,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontFamily: 'Aleo',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 24.0,
-                    color: Colors.black
-                ),
-              ),
             ),
             Container(
               child:Text(detailedUser.userName,
@@ -49,8 +36,9 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             Container(
-              child:Text(detailedUser.userSalary,
+              child:Text(detailedUser.id.toString(),
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     fontFamily: 'Aleo',
@@ -61,8 +49,9 @@ class DetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             Container(
-              child:Text(detailedUser.userAge,
+              child:Text(detailedUser.userType,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     fontFamily: 'Aleo',
