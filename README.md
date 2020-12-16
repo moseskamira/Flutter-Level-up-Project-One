@@ -16,4 +16,5 @@ This project is intended to levelup on Flutter as a framework and Dart as a prog
 ![List developers](/assets/images/userdetails.png)
 
 ## Note:
+
 - All implementation is done in the lib folder.

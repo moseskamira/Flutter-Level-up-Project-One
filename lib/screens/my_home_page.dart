@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myFlutterApp/screens/users_view.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,39 +19,36 @@ class _FormScreenState extends State<MyHomePage> {
       userName,
       email,
       password,
-      phoneNumber;
+      phoneNumber,
+      filePath;
+  bool _isCheckedFb = false;
+  bool _isCheckedLn = false;
 
   Widget buildUserName() => TextFormField(
-        decoration: InputDecoration(labelText: 'Enter Name'),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'UserName Required!';
-          } else if (value.length < 3) {
-            return 'Acceptable minimum number of characters is: 3 !';
-          }
-          return null;
-        },
-        onSaved: (String value) {
-          userName = value;
-        },
-      );
+      decoration: InputDecoration(labelText: 'Enter Name'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'UserName Required!';
+        } else if (value.length < 3) {
+          return 'Acceptable minimum number of characters is: 3 !';
+        }
+        return null;
+      },
+      onSaved: (String value) => userName = value);
 
   Widget buildEmail() => TextFormField(
-        decoration: InputDecoration(labelText: 'Enter Email'),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'userEmail Required !';
-          } else if (!RegExp(
-                  r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-              .hasMatch(value)) {
-            return 'Enter Valid Email Address !';
-          }
-          return null;
-        },
-        onSaved: (String value) {
-          email = value;
-        },
-      );
+      decoration: InputDecoration(labelText: 'Enter Email'),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'userEmail Required !';
+        } else if (!RegExp(
+                r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+            .hasMatch(value)) {
+          return 'Enter Valid Email Address !';
+        }
+        return null;
+      },
+      onSaved: (String value) => email = value);
 
   Widget buildPassword() => TextFormField(
         decoration: InputDecoration(labelText: 'Enter Password'),
@@ -141,6 +140,56 @@ class _FormScreenState extends State<MyHomePage> {
         ],
       );
 
+  Widget buildCheckBoxRow() => Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            "Social Media:",
+            style: new TextStyle(color: Colors.black),
+          ),
+          buildFaceBookRow(),
+          buildLinkedInRow(),
+        ],
+      );
+
+  Widget buildFaceBookRow() => Row(
+        children: <Widget>[
+          Checkbox(
+              activeColor: Colors.blue,
+              value: _isCheckedFb,
+              onChanged: (bool value) =>
+                  setState(() => _isCheckedFb = !_isCheckedFb)),
+          GestureDetector(
+            // onTap: () => print("Remember me"),
+            child: Text(
+              "FaceBook",
+              style: new TextStyle(color: Colors.black),
+            ),
+            onTap: () {
+              print("You Tapped Me");
+            },
+          ),
+        ],
+      );
+
+  Widget buildLinkedInRow() => Row(
+        children: <Widget>[
+          Checkbox(
+              activeColor: Colors.blue,
+              value: _isCheckedLn,
+              onChanged: (bool value) =>
+                  setState(() => _isCheckedLn = !_isCheckedLn)),
+          GestureDetector(
+            // onTap: () => print("Remember me"),
+            child: Text(
+              "LinkedIn",
+              style: new TextStyle(color: Colors.black),
+            ),
+          )
+        ],
+      );
+
   Widget buildSubmitRegBtn() => RaisedButton(
         color: Colors.blue,
         textColor: Colors.white,
@@ -152,17 +201,6 @@ class _FormScreenState extends State<MyHomePage> {
         ),
         onPressed: processRegData,
       );
-
-  void processRegData() {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    _formKey.currentState.save();
-    print(selectedNationality);
-    print(email);
-    print(dropdownValue.toUpperCase());
-    print(phoneNumber);
-  }
 
   Widget buildHomePageTitle() => Text(
         'USER REG FORM',
@@ -177,8 +215,7 @@ class _FormScreenState extends State<MyHomePage> {
       decoration: BoxDecoration(
           color: Colors.blue,
           image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))
-      ),
+              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))),
       child: Stack(children: <Widget>[
         Positioned(
           bottom: 4.0,
@@ -192,6 +229,31 @@ class _FormScreenState extends State<MyHomePage> {
           ),
         ),
       ]));
+
+  void getFilePath() async {
+    try {
+      filePath = await FilePicker.getFilePath(type: FileType.ANY);
+      if (filePath == '') {
+        return;
+      }
+      setState(() => filePath = filePath);
+      print("SELECTEDFILEPATH: " + filePath);
+    } on PlatformException catch (e) {
+      print("Error while picking the file: " + e.toString());
+    }
+  }
+
+  void processRegData() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print(selectedNationality);
+    print(email);
+    print(dropdownValue.toUpperCase());
+    print(phoneNumber);
+    getFilePath();
+  }
 
   Future navigateToUsersView(context) async {
     Navigator.push(
@@ -225,6 +287,8 @@ class _FormScreenState extends State<MyHomePage> {
                     buildPhoneNumber(),
                     buildDropDownRow(),
                     buildRadioBtnRow(),
+                    buildCheckBoxRow(),
+                    // buildFileUploader(),
                     SizedBox(height: 5),
                     buildSubmitRegBtn(),
                   ],
