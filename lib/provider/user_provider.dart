@@ -16,7 +16,6 @@ class UserProvider with ChangeNotifier{
   void _loadUsers() async{
     users = await userHelper.getUsers();
     notifyListeners();
-
   }
 
 }
