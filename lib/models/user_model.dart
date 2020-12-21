@@ -1,29 +1,32 @@
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
+
 class User {
-  final int id;
 
-  @JsonKey(name: 'login')
-  final String userName;
-
-  @JsonKey(name: 'url')
-  final String profileUrl;
-
-  @JsonKey(name: 'avatar_url')
-  final String profileImage;
-
-  @JsonKey(name: 'type')
-  final String userType;
+  static const USERID = "id";
+  static const USERNAME = "login";
+  static const PROFILEURL = "url";
+  static const PROFILEIMAGE = "avatar_url";
+  static const USERTYPE = "type";
 
 
-  User(
-      this.id, this.userName, this.profileUrl, this.profileImage, this.userType);
+  int _id;
+  String _userName;
+  String _profileUrl;
+  String _profileImage;
+  String _userType;
 
-  User.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        userName = json['login'],
-        profileUrl = json['url'],
-        profileImage = json['avatar_url'],
-        userType = json['type'];
+  int get id => _id;
+  String get username => _userName;
+  String  get profileUrl => _profileUrl;
+  String get profileImage => _profileImage;
+  String get userType => _userType;
+
+
+  User.fromJson(Map<String, dynamic> userJsonResp)
+      : _id = userJsonResp[USERID],
+        _userName = userJsonResp[USERNAME],
+        _profileUrl = userJsonResp[PROFILEURL],
+        _profileImage = userJsonResp[PROFILEIMAGE],
+        _userType = userJsonResp[USERTYPE];
 }

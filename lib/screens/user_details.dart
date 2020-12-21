@@ -25,7 +25,7 @@ class DetailScreen extends StatelessWidget {
                 ),
             ),
             Container(
-              child:Text(detailedUser.userName,
+              child:Text(detailedUser.username,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     fontFamily: 'Aleo',
