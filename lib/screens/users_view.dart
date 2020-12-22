@@ -15,6 +15,7 @@ class UsersView extends StatelessWidget {
         backgroundColor: Colors.green,
       ),
       body: Container(
+        width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: ListView.builder(
           scrollDirection: Axis.vertical,
@@ -46,6 +47,5 @@ class UsersView extends StatelessWidget {
             ),
           ),
         )));
-
   }
 }

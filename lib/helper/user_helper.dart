@@ -19,8 +19,7 @@ class UserHelper {
               return jsonData.map((users) => User.fromJson(users)).toList();
             } else {
               throw Exception('Failed To Fetch Data');
-            }
-
-          });
+            }}
+            );
 
 }

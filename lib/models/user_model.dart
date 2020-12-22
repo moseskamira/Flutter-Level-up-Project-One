@@ -1,5 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
 
 class User {
 
@@ -8,7 +6,6 @@ class User {
   static const PROFILEURL = "url";
   static const PROFILEIMAGE = "avatar_url";
   static const USERTYPE = "type";
-
 
   int _id;
   String _userName;
@@ -21,7 +18,6 @@ class User {
   String  get profileUrl => _profileUrl;
   String get profileImage => _profileImage;
   String get userType => _userType;
-
 
   User.fromJson(Map<String, dynamic> userJsonResp)
       : _id = userJsonResp[USERID],
