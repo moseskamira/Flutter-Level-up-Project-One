@@ -30,6 +30,8 @@ class _FormScreenState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
+          autofocus: true,
+          autocorrect: true,
           decoration: InputDecoration(
             labelText: 'Enter Your Name',
             border: InputBorder.none,
@@ -153,34 +155,6 @@ class _FormScreenState extends State<MyHomePage> {
         ),
       );
 
-  Widget buildUgandanRadioBtn() => Row(
-        children: <Widget>[
-          Radio(
-            activeColor: Theme.of(context).primaryColor,
-            value: nationality[0],
-            groupValue: selectedNationality,
-            onChanged: (value) {
-              setState(() => selectedNationality = value);
-            },
-          ),
-          Text("Ugandan"),
-        ],
-      );
-
-  Widget buildOtherOptionRadioBtn() => Row(
-        children: <Widget>[
-          Radio(
-            activeColor: Theme.of(context).primaryColor,
-            value: nationality[1],
-            groupValue: selectedNationality,
-            onChanged: (value) {
-              setState(() => selectedNationality = value);
-            },
-          ),
-          Text("Other")
-        ],
-      );
-
   Widget buildRadioBtnRow() => Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -197,6 +171,34 @@ class _FormScreenState extends State<MyHomePage> {
             buildOtherOptionRadioBtn(),
           ],
         ),
+      );
+
+  Widget buildOtherOptionRadioBtn() => Row(
+        children: <Widget>[
+          Text("Other"),
+          Radio(
+            activeColor: Theme.of(context).primaryColor,
+            value: nationality[1],
+            groupValue: selectedNationality,
+            onChanged: (value) {
+              setState(() => selectedNationality = value);
+            },
+          ),
+        ],
+      );
+
+  Widget buildUgandanRadioBtn() => Row(
+        children: <Widget>[
+          Text("Ugandan"),
+          Radio(
+            activeColor: Theme.of(context).primaryColor,
+            value: nationality[0],
+            groupValue: selectedNationality,
+            onChanged: (value) {
+              setState(() => selectedNationality = value);
+            },
+          ),
+        ],
       );
 
   Widget buildCheckBoxRow() => Container(
@@ -219,40 +221,33 @@ class _FormScreenState extends State<MyHomePage> {
       );
 
   Widget buildFaceBookRow() => Row(
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
+          Text(
+            'FaceBook',
+            style: new TextStyle(color: Colors.black),
+          ),
           Checkbox(
             activeColor: Colors.blue,
             value: _isCheckedFb,
             onChanged: (bool value) =>
                 setState(() => _isCheckedFb = !_isCheckedFb),
           ),
-          GestureDetector(
-            // onTap: () => print("Remember me"),
-            child: Text(
-              "FaceBook",
-              style: new TextStyle(color: Colors.black),
-            ),
-            onTap: () {
-              print("You Tapped Me");
-            },
-          ),
         ],
       );
 
   Widget buildLinkedInRow() => Row(
         children: <Widget>[
+          Text(
+            "LinkedIn",
+            style: new TextStyle(color: Colors.black),
+          ),
           Checkbox(
-              activeColor: Colors.blue,
-              value: _isCheckedLn,
-              onChanged: (bool value) =>
-                  setState(() => _isCheckedLn = !_isCheckedLn)),
-          GestureDetector(
-            // onTap: () => print("Remember me"),
-            child: Text(
-              "LinkedIn",
-              style: new TextStyle(color: Colors.black),
-            ),
-          )
+            activeColor: Colors.blue,
+            value: _isCheckedLn,
+            onChanged: (bool value) =>
+                setState(() => _isCheckedLn = !_isCheckedLn),
+          ),
         ],
       );
 
@@ -268,12 +263,23 @@ class _FormScreenState extends State<MyHomePage> {
         onPressed: processRegData,
       );
 
-  Widget buildHomePageTitle() => Text(
-        'USER REG FORM',
-        style: TextStyle(
-          fontSize: 24,
-          color: Colors.black,
-          decoration: TextDecoration.underline,
+  Widget buildHomePageTitle() => Container(
+        margin: const EdgeInsets.symmetric(vertical: 20.0),
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            'USER REG FORM',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              decoration: TextDecoration.none,
+            ),
+          ),
         ),
       );
 
