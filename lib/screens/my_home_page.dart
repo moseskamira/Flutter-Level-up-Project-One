@@ -24,58 +24,103 @@ class _FormScreenState extends State<MyHomePage> {
   bool _isCheckedFb = false;
   bool _isCheckedLn = false;
 
-  Widget buildUserName() => TextFormField(
-      decoration: InputDecoration(labelText: 'Enter Name'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'UserName Required!';
-        } else if (value.length < 3) {
-          return 'Acceptable minimum number of characters is: 3 !';
-        }
-        return null;
-      },
-      onSaved: (String value) => userName = value);
-
-  Widget buildEmail() => TextFormField(
-      decoration: InputDecoration(labelText: 'Enter Email'),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'userEmail Required !';
-        } else if (!RegExp(
-                r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-            .hasMatch(value)) {
-          return 'Enter Valid Email Address !';
-        }
-        return null;
-      },
-      onSaved: (String value) => email = value);
-
-  Widget buildPassword() => TextFormField(
-        decoration: InputDecoration(labelText: 'Enter Password'),
-        obscureText: true,
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Password Required !';
-          }
-          return null;
-        },
-        onSaved: (value) => setState(() => password = value),
+  Widget buildUserName() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Enter Your Name',
+              border: InputBorder.none,
+              icon: Icon(Icons.person)
+            ),
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'UserName Required!';
+              } else if (value.length < 3) {
+                return 'Acceptable minimum number of characters is: 3 !';
+              }
+              return null;
+            },
+            onSaved: (String value) => userName = value),
       );
 
-  Widget buildPhoneNumber() => TextFormField(
-      decoration: InputDecoration(labelText: 'Enter Phone Number'),
-      keyboardType: TextInputType.phone,
-      maxLength: 10,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Phone Number Required !';
-        } else if (value.length != 10) {
-          return 'Invalid Phone Number Length !';
-        }
-        return null;
-      },
-      onSaved: (value) =>
-          setState(() => phoneNumber = value.toString().trim()));
+  Widget buildEmail() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Enter Your Email',
+              border: InputBorder.none,
+              icon: Icon(Icons.email),
+            ),
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'userEmail Required !';
+              } else if (!RegExp(
+                      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                  .hasMatch(value)) {
+                return 'Enter Valid Email Address !';
+              }
+              return null;
+            },
+            onSaved: (String value) => email = value),
+      );
+
+  Widget buildPassword() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextFormField(
+          decoration: InputDecoration(
+              labelText: 'Enter Password', border: InputBorder.none),
+          obscureText: true,
+          validator: (String value) {
+            if (value.isEmpty) {
+              return 'Password Required !';
+            }
+            return null;
+          },
+          onSaved: (value) => setState(() => password = value),
+        ),
+      );
+
+  Widget buildPhoneNumber() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: TextFormField(
+            decoration: InputDecoration(
+              labelText: 'Enter Phone Number',
+              border: InputBorder.none,
+              icon: Icon(Icons.phone),
+            ),
+            keyboardType: TextInputType.phone,
+            maxLength: 10,
+            validator: (String value) {
+              if (value.isEmpty) {
+                return 'Phone Number Required !';
+              } else if (value.length != 10) {
+                return 'Invalid Phone Number Length !';
+              }
+              return null;
+            },
+            onSaved: (value) =>
+                setState(() => phoneNumber = value.toString().trim())),
+      );
 
   Widget buildGenderDropDownWidget() => DropdownButton(
         hint: Text('Select Gender:'),
@@ -276,23 +321,23 @@ class _FormScreenState extends State<MyHomePage> {
               height: MediaQuery.of(context).size.height,
               child: Form(
                 key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildHomePageTitle(),
-                    buildUserName(),
-                    buildEmail(),
-                    buildPassword(),
-                    buildPhoneNumber(),
-                    buildDropDownRow(),
-                    buildRadioBtnRow(),
-                    buildCheckBoxRow(),
-                    // buildFileUploader(),
-                    SizedBox(height: 5),
-                    buildSubmitRegBtn(),
-                  ],
-                ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildHomePageTitle(),
+                      buildUserName(),
+                      buildEmail(),
+                      buildPassword(),
+                      buildPhoneNumber(),
+                      buildDropDownRow(),
+                      buildRadioBtnRow(),
+                      buildCheckBoxRow(),
+                      // buildFileUploader(),
+                      SizedBox(height: 5),
+                      buildSubmitRegBtn(),
+                    ],
+                  ),
               ),
             ),
           ),
