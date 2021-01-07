@@ -1,9 +1,7 @@
-import 'dart:ffi';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myFlutterApp/screens/users_view.dart';
+import 'package:myFlutterApp/screens/drawer.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -29,23 +27,25 @@ class _FormScreenState extends State<MyHomePage> {
           border: Border.all(
             color: Colors.grey,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Enter Your Name',
-              border: InputBorder.none,
-              icon: Icon(Icons.person)
-            ),
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'UserName Required!';
-              } else if (value.length < 3) {
-                return 'Acceptable minimum number of characters is: 3 !';
-              }
-              return null;
-            },
-            onSaved: (String value) => userName = value),
+          decoration: InputDecoration(
+            labelText: 'Enter Your Name',
+            border: InputBorder.none,
+            icon: Icon(Icons.person),
+          ),
+          keyboardType: TextInputType.name,
+          validator: (String value) {
+            if (value.isEmpty) {
+              return 'UserName Required!';
+            } else if (value.length < 3) {
+              return 'Acceptable minimum number of characters is: 3 !';
+            }
+            return null;
+          },
+          onSaved: (String value) => setState(() => userName = value),
+        ),
       );
 
   Widget buildEmail() => Container(
@@ -53,7 +53,7 @@ class _FormScreenState extends State<MyHomePage> {
           border: Border.all(
             color: Colors.grey,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
             decoration: InputDecoration(
@@ -61,6 +61,7 @@ class _FormScreenState extends State<MyHomePage> {
               border: InputBorder.none,
               icon: Icon(Icons.email),
             ),
+            keyboardType: TextInputType.emailAddress,
             validator: (String value) {
               if (value.isEmpty) {
                 return 'userEmail Required !';
@@ -71,7 +72,7 @@ class _FormScreenState extends State<MyHomePage> {
               }
               return null;
             },
-            onSaved: (String value) => email = value),
+            onSaved: (String value) => setState(() => email = value)),
       );
 
   Widget buildPassword() => Container(
@@ -79,11 +80,13 @@ class _FormScreenState extends State<MyHomePage> {
           border: Border.all(
             color: Colors.grey,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
           decoration: InputDecoration(
-              labelText: 'Enter Password', border: InputBorder.none),
+            labelText: 'Enter Your Password',
+            border: InputBorder.none,
+          ),
           obscureText: true,
           validator: (String value) {
             if (value.isEmpty) {
@@ -100,7 +103,7 @@ class _FormScreenState extends State<MyHomePage> {
           border: Border.all(
             color: Colors.grey,
           ),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
             decoration: InputDecoration(
@@ -109,7 +112,6 @@ class _FormScreenState extends State<MyHomePage> {
               icon: Icon(Icons.phone),
             ),
             keyboardType: TextInputType.phone,
-            maxLength: 10,
             validator: (String value) {
               if (value.isEmpty) {
                 return 'Phone Number Required !';
@@ -123,7 +125,7 @@ class _FormScreenState extends State<MyHomePage> {
       );
 
   Widget buildGenderDropDownWidget() => DropdownButton(
-        hint: Text('Select Gender:'),
+        hint: Text('Select Your Gender:'),
         items: spinnerItems
             .map(
               (gender) => DropdownMenuItem(
@@ -136,13 +138,19 @@ class _FormScreenState extends State<MyHomePage> {
         onChanged: (newValue) => setState(() => dropdownValue = newValue),
       );
 
-  Widget buildDropDownRow() => Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Gender:'),
-          buildGenderDropDownWidget(),
-        ],
+  Widget buildDropDownRow() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Gender:'),
+            buildGenderDropDownWidget(),
+          ],
+        ),
       );
 
   Widget buildUgandanRadioBtn() => Row(
@@ -173,38 +181,51 @@ class _FormScreenState extends State<MyHomePage> {
         ],
       );
 
-  Widget buildRadioBtnRow() => Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            'Nationality:',
-          ),
-          buildUgandanRadioBtn(),
-          buildOtherOptionRadioBtn(),
-        ],
+  Widget buildRadioBtnRow() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              'Nationality:',
+            ),
+            buildUgandanRadioBtn(),
+            buildOtherOptionRadioBtn(),
+          ],
+        ),
       );
 
-  Widget buildCheckBoxRow() => Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            "Social Media:",
-            style: new TextStyle(color: Colors.black),
-          ),
-          buildFaceBookRow(),
-          buildLinkedInRow(),
-        ],
+  Widget buildCheckBoxRow() => Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              "Social Media:",
+              style: new TextStyle(color: Colors.black),
+            ),
+            buildFaceBookRow(),
+            buildLinkedInRow(),
+          ],
+        ),
       );
 
   Widget buildFaceBookRow() => Row(
         children: <Widget>[
           Checkbox(
-              activeColor: Colors.blue,
-              value: _isCheckedFb,
-              onChanged: (bool value) =>
-                  setState(() => _isCheckedFb = !_isCheckedFb)),
+            activeColor: Colors.blue,
+            value: _isCheckedFb,
+            onChanged: (bool value) =>
+                setState(() => _isCheckedFb = !_isCheckedFb),
+          ),
           GestureDetector(
             // onTap: () => print("Remember me"),
             child: Text(
@@ -256,25 +277,6 @@ class _FormScreenState extends State<MyHomePage> {
         ),
       );
 
-  Widget buildDrawerHeader() => DrawerHeader(
-      decoration: BoxDecoration(
-          color: Colors.blue,
-          image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))),
-      child: Stack(children: <Widget>[
-        Positioned(
-          bottom: 4.0,
-          left: 16.0,
-          child: Text(
-            'USER MANAGEMENT SYSTEM',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500),
-          ),
-        ),
-      ]));
-
   void getFilePath() async {
     try {
       filePath = await FilePicker.getFilePath(type: FileType.ANY);
@@ -297,12 +299,7 @@ class _FormScreenState extends State<MyHomePage> {
     print(email);
     print(dropdownValue.toUpperCase());
     print(phoneNumber);
-    getFilePath();
-  }
-
-  Future navigateToUsersView(context) async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => UsersView()));
+    // getFilePath();
   }
 
   @override
@@ -321,46 +318,27 @@ class _FormScreenState extends State<MyHomePage> {
               height: MediaQuery.of(context).size.height,
               child: Form(
                 key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      buildHomePageTitle(),
-                      buildUserName(),
-                      buildEmail(),
-                      buildPassword(),
-                      buildPhoneNumber(),
-                      buildDropDownRow(),
-                      buildRadioBtnRow(),
-                      buildCheckBoxRow(),
-                      // buildFileUploader(),
-                      SizedBox(height: 5),
-                      buildSubmitRegBtn(),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    buildHomePageTitle(),
+                    buildUserName(),
+                    buildEmail(),
+                    buildPhoneNumber(),
+                    buildPassword(),
+                    buildDropDownRow(),
+                    buildRadioBtnRow(),
+                    buildCheckBoxRow(),
+                    // buildFileUploader(),
+                    SizedBox(height: 5),
+                    buildSubmitRegBtn(),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              buildDrawerHeader(),
-              ListTile(
-                title: Text('View Users List'),
-                onTap: () {
-                  navigateToUsersView(context);
-                },
-              ),
-              ListTile(
-                title: Text('Update User Info'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: DrawerWidget(),
       );
 }
