@@ -6,9 +6,12 @@ import 'change_screen.dart';
 class DrawerWidget extends StatelessWidget {
   Widget buildDrawerHeader() => DrawerHeader(
       decoration: BoxDecoration(
-          color: Colors.blue,
-          image: DecorationImage(
-              fit: BoxFit.fill, image: AssetImage('assets/images/user.jpeg'))),
+        color: Colors.blue,
+        image: DecorationImage(
+          fit: BoxFit.fill,
+          image: AssetImage('assets/images/user.jpeg'),
+        ),
+      ),
       child: Stack(children: <Widget>[
         Positioned(
           bottom: 4.0,
