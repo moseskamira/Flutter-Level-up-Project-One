@@ -9,7 +9,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _FormScreenState extends State<MyHomePage> {
-  List<String> spinnerItems = ['Male', 'Female'];
+  List<String> spinnerItems = ['Male', 'Female', 'Prefer Not To Say'];
   List nationality = ["Ugandan", "Other"];
   final _formKey = GlobalKey<FormState>();
   String dropdownValue,
@@ -30,7 +30,6 @@ class _FormScreenState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
-          autofocus: true,
           autocorrect: true,
           decoration: InputDecoration(
             labelText: 'Enter Your Name',
@@ -126,21 +125,7 @@ class _FormScreenState extends State<MyHomePage> {
                 setState(() => phoneNumber = value.toString().trim())),
       );
 
-  Widget buildGenderDropDownWidget() => DropdownButton(
-        hint: Text('Select Your Gender:'),
-        items: spinnerItems
-            .map(
-              (gender) => DropdownMenuItem(
-                child: Text(gender),
-                value: gender,
-              ),
-            )
-            .toList(),
-        value: dropdownValue,
-        onChanged: (newValue) => setState(() => dropdownValue = newValue),
-      );
-
-  Widget buildDropDownRow() => Container(
+  Widget buildGenderDropDownRow() => Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(4),
@@ -150,7 +135,19 @@ class _FormScreenState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('Gender:'),
-            buildGenderDropDownWidget(),
+            DropdownButton(
+              hint: Text('Select Your Gender:'),
+              items: spinnerItems
+                  .map(
+                    (gender) => DropdownMenuItem(
+                      child: Text(gender),
+                      value: gender,
+                    ),
+                  )
+                  .toList(),
+              value: dropdownValue,
+              onChanged: (newValue) => setState(() => dropdownValue = newValue),
+            ),
           ],
         ),
       );
@@ -251,16 +248,17 @@ class _FormScreenState extends State<MyHomePage> {
         ],
       );
 
-  Widget buildSubmitRegBtn() => RaisedButton(
-        color: Colors.blue,
-        textColor: Colors.white,
-        child: Text(
-          'Submit'.toUpperCase(),
-          style: TextStyle(
-            fontSize: 16,
+  Widget buildSubmitRegBtn() => Container(
+        margin: const EdgeInsets.symmetric(vertical: 20.0),
+        child: RaisedButton(
+          color: Colors.grey,
+          textColor: Colors.black,
+          onPressed: processRegData,
+          child: Text(
+            'Submit'.toUpperCase(),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
-        onPressed: processRegData,
       );
 
   Widget buildHomePageTitle() => Container(
@@ -269,23 +267,42 @@ class _FormScreenState extends State<MyHomePage> {
           color: Colors.grey,
           borderRadius: BorderRadius.circular(4),
         ),
+        child: Text(
+          'USER REG FORM',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+            decoration: TextDecoration.none,
+          ),
+        ),
+      );
+
+  Widget buildFileUploader() => Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey),
+            borderRadius: BorderRadius.circular(4)),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            'USER REG FORM',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              decoration: TextDecoration.none,
-            ),
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text('Profile Photo:'),
+              SizedBox(
+                width: 100,
+              ),
+              IconButton(
+                icon: Icon(Icons.attachment_rounded),
+                onPressed: getFilePath,
+              ),
+            ],
           ),
         ),
       );
 
   void getFilePath() async {
     try {
-      filePath = await FilePicker.getFilePath(type: FileType.ANY);
+      filePath = await FilePicker.getFilePath(type: FileType.IMAGE);
       if (filePath == '') {
         return;
       }
@@ -305,42 +322,39 @@ class _FormScreenState extends State<MyHomePage> {
     print(email);
     print(dropdownValue.toUpperCase());
     print(phoneNumber);
-    // getFilePath();
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("USER MANAGEMENT SYSTEM"),
+          elevation: 0,
+          centerTitle: true,
+          title: Text('U.M.S'),
           backgroundColor: Colors.green,
           brightness: Brightness.light,
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(8),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildHomePageTitle(),
-                    buildUserName(),
-                    buildEmail(),
-                    buildPhoneNumber(),
-                    buildPassword(),
-                    buildDropDownRow(),
-                    buildRadioBtnRow(),
-                    buildCheckBoxRow(),
-                    // buildFileUploader(),
-                    SizedBox(height: 5),
-                    buildSubmitRegBtn(),
-                  ],
-                ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  buildHomePageTitle(),
+                  buildUserName(),
+                  buildEmail(),
+                  buildPhoneNumber(),
+                  buildPassword(),
+                  buildGenderDropDownRow(),
+                  buildRadioBtnRow(),
+                  buildCheckBoxRow(),
+                  buildFileUploader(),
+                  SizedBox(height: 5),
+                  buildSubmitRegBtn(),
+                ],
               ),
             ),
           ),
