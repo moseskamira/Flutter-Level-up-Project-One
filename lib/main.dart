@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'my_app.dart';
+import 'screens/my_app.dart';
 import 'package:myFlutterApp/provider/user_provider.dart';
 
 void main() {
@@ -15,4 +14,3 @@ void main() {
     ),
   );
 }
-
