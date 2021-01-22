@@ -5,6 +5,7 @@ import 'package:myFlutterApp/models/user_model.dart';
 
 class UserProvider with ChangeNotifier {
   static const url = "https://api.github.com/";
+  final _formKey = GlobalKey<FormState>();
 
   String getPath() {
     return url + "search/users?q=type:User+location:Kampala+language:JAVA";
@@ -26,4 +27,6 @@ class UserProvider with ChangeNotifier {
       print('ERROR: ' + e.toString());
     }
   }
+
+  GlobalKey<FormState> get formKey => _formKey;
 }

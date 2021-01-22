@@ -32,12 +32,12 @@ class User {
     _userType = userType;
   }
 
-  User.fromJson(Map<String, dynamic> userJsonResp)
-      : _id = userJsonResp[USERID],
-        _userName = userJsonResp[USERNAME],
-        _profileUrl = userJsonResp[PROFILEURL],
-        _profileImage = userJsonResp[PROFILEIMAGE],
-        _userType = userJsonResp[USERTYPE];
+  User.fromJsonConverter(Map<String, dynamic> user)
+      : _id = user[USERID],
+        _userName = user[USERNAME],
+        _profileUrl = user[PROFILEURL],
+        _profileImage = user[PROFILEIMAGE],
+        _userType = user[USERTYPE];
 
   @override
   String toString() {

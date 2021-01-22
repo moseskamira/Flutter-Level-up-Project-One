@@ -1,7 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myFlutterApp/provider/user_provider.dart';
 import 'package:myFlutterApp/screens/drawer.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -11,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 class _FormScreenState extends State<MyHomePage> {
   List<String> spinnerItems = ['Male', 'Female', 'Prefer Not To Say'];
   List nationality = ["Ugandan", "Other"];
-  final _formKey = GlobalKey<FormState>();
+
   String dropdownValue,
       selectedNationality,
       userName,
@@ -302,64 +304,72 @@ class _FormScreenState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text('U.M.S'),
-          brightness: Brightness.light,
+  Widget build(BuildContext context) {
+    final provider = Provider.of<UserProvider>(context);
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        brightness: Brightness.light,
+        iconTheme: IconThemeData(
+          color: Colors.black,
         ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            margin: const EdgeInsets.all(8),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  buildHomePageTitle(),
-                  buildUserName(),
-                  buildEmail(),
-                  buildPhoneNumber(),
-                  buildPassword(),
-                  buildGenderDropDownRow(),
-                  buildRadioBtnRow(),
-                  buildCheckBoxRow(),
-                  buildFileUploader(),
-                  SizedBox(height: 5),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: RaisedButton(
-                      color: Colors.grey,
-                      textColor: Colors.black,
-                      onPressed: processRegData,
-                      child: Text(
-                        'Submit'.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+        title: Text('U.M.S'),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          margin: const EdgeInsets.all(8),
+          child: Form(
+            key: provider.formKey,
+            autovalidateMode: AutovalidateMode.disabled,
+            onChanged: () {
+              Form.of(primaryFocus.context).save();
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                buildHomePageTitle(),
+                buildUserName(),
+                buildEmail(),
+                buildPhoneNumber(),
+                buildPassword(),
+                buildGenderDropDownRow(),
+                buildRadioBtnRow(),
+                buildCheckBoxRow(),
+                buildFileUploader(),
+                SizedBox(height: 5),
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: RaisedButton(
+                    color: Colors.grey,
+                    textColor: Colors.black,
+                    onPressed: () {
+                      if (!provider.formKey.currentState.validate()) {
+                        return;
+                      }
+                      provider.formKey.currentState.save();
+                      print(selectedNationality);
+                      print(email);
+                      print(dropdownValue.toUpperCase());
+                      print(phoneNumber);
+                    },
+                    child: Text(
+                      'Submit'.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
-        drawer: DrawerWidget(),
-      );
-
-  void processRegData() {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    _formKey.currentState.save();
-    print(selectedNationality);
-    print(email);
-    print(dropdownValue.toUpperCase());
-    print(phoneNumber);
+      ),
+      drawer: DrawerWidget(),
+    );
   }
 }

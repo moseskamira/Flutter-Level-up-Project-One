@@ -4,16 +4,17 @@ import 'package:http/http.dart' as http;
 import 'package:myFlutterApp/models/user_model.dart';
 
 class UserHelper {
+  List<User> usersList = [];
 
   Future<List<User>> getUsers(String url) async =>
       await http.get(url).then((result) {
         if (result.statusCode == 200) {
-          var json = jsonDecode(result.body);
-          List jsonDataList = json['items'];
+          List jsonDataList = jsonDecode(result.body)['items'];
           print(jsonDataList.toString());
-          return jsonDataList.map((users) => User.fromJson(users)).toList();
+          usersList = jsonDataList.map((user) => User.fromJsonConverter(user)).toList();
+          return usersList;
         } else {
-          throw Exception('Failed To Fetch Data');
+          return usersList;
         }
       });
 }
