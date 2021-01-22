@@ -87,6 +87,7 @@ class _FormScreenState extends State<MyHomePage> {
           decoration: InputDecoration(
             labelText: 'Enter Your Password',
             border: InputBorder.none,
+            icon: Icon(Icons.lock),
           ),
           obscureText: true,
           validator: (String value) {
@@ -330,7 +331,6 @@ class _FormScreenState extends State<MyHomePage> {
           elevation: 0,
           centerTitle: true,
           title: Text('U.M.S'),
-          backgroundColor: Colors.green,
           brightness: Brightness.light,
         ),
         backgroundColor: Colors.white,

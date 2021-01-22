@@ -4,6 +4,7 @@ import 'package:myFlutterApp/screens/users_view.dart';
 import 'change_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
+
   Widget buildDrawerHeader() => DrawerHeader(
       decoration: BoxDecoration(
         color: Colors.blue,
@@ -21,7 +22,7 @@ class DrawerWidget extends StatelessWidget {
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 16.0,
-                fontWeight: FontWeight.w500),
+                fontWeight: FontWeight.bold),
           ),
         ),
       ]));
@@ -31,19 +32,15 @@ class DrawerWidget extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: <Widget>[
+        children: [
           buildDrawerHeader(),
           ListTile(
             title: Text('View Users List'),
-            onTap: () {
-              changeScreen(context, UsersView());
-            },
+            onTap: () => changeScreen(context, UsersView()),
           ),
           ListTile(
             title: Text('Update User Info'),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () => loadPreviousScreen(context),
           ),
         ],
       ),
