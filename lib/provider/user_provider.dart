@@ -9,6 +9,7 @@ class UserProvider with ChangeNotifier {
   String getPath() {
     return url + "search/users?q=type:User+location:Kampala+language:JAVA";
   }
+
   UserHelper userHelper = UserHelper();
   List<User> users = [];
 
@@ -19,11 +20,10 @@ class UserProvider with ChangeNotifier {
   void _loadUsers() async {
     try {
       users = await userHelper.getUsers(getPath());
-      users = await userHelper.getUsers();
       notifyListeners();
     } catch (e) {
       notifyListeners();
-      print('ERROR: '+e.toString());
+      print('ERROR: ' + e.toString());
     }
   }
 }
