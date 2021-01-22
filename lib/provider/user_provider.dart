@@ -19,6 +19,7 @@ class UserProvider with ChangeNotifier {
   void _loadUsers() async {
     try {
       users = await userHelper.getUsers(getPath());
+      users = await userHelper.getUsers();
       notifyListeners();
     } catch (e) {
       notifyListeners();

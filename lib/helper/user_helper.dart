@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:myFlutterApp/models/user_model.dart';
 
 class UserHelper {
-  Future<List<User>> getUsers(String urlString) async =>
-      await http.get(urlString).then((result) {
+
+  Future<List<User>> getUsers() async =>
+      await http.get(getPath()).then((result) {
         if (result.statusCode == 200) {
           var json = jsonDecode(result.body);
           List jsonDataList = json['items'];
