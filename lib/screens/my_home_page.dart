@@ -57,6 +57,7 @@ class _FormScreenState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: TextFormField(
+            // controller: ,
             decoration: InputDecoration(
               labelText: 'Enter Your Email',
               border: InputBorder.none,
@@ -249,19 +250,6 @@ class _FormScreenState extends State<MyHomePage> {
         ],
       );
 
-  Widget buildSubmitRegBtn() => Container(
-        margin: const EdgeInsets.symmetric(vertical: 20.0),
-        child: RaisedButton(
-          color: Colors.grey,
-          textColor: Colors.black,
-          onPressed: processRegData,
-          child: Text(
-            'Submit'.toUpperCase(),
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ),
-      );
-
   Widget buildHomePageTitle() => Container(
         margin: const EdgeInsets.symmetric(vertical: 20.0),
         decoration: BoxDecoration(
@@ -308,21 +296,9 @@ class _FormScreenState extends State<MyHomePage> {
         return;
       }
       setState(() => filePath = filePath);
-      print("SELECTEDFILEPATH: " + filePath);
     } on PlatformException catch (e) {
       print("Error while picking the file: " + e.toString());
     }
-  }
-
-  void processRegData() {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    _formKey.currentState.save();
-    print(selectedNationality);
-    print(email);
-    print(dropdownValue.toUpperCase());
-    print(phoneNumber);
   }
 
   @override
@@ -353,7 +329,21 @@ class _FormScreenState extends State<MyHomePage> {
                   buildCheckBoxRow(),
                   buildFileUploader(),
                   SizedBox(height: 5),
-                  buildSubmitRegBtn(),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: RaisedButton(
+                      color: Colors.grey,
+                      textColor: Colors.black,
+                      onPressed: processRegData,
+                      child: Text(
+                        'Submit'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -361,4 +351,15 @@ class _FormScreenState extends State<MyHomePage> {
         ),
         drawer: DrawerWidget(),
       );
+
+  void processRegData() {
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    print(selectedNationality);
+    print(email);
+    print(dropdownValue.toUpperCase());
+    print(phoneNumber);
+  }
 }
