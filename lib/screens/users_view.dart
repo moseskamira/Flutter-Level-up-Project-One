@@ -12,7 +12,6 @@ class UsersView extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: Text('U.M.S'),
-          title: Text('USER MANAGEMENT SYSTEM'),
           brightness: Brightness.light,
         ),
         backgroundColor: Colors.white,
