@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myFlutterApp/screens/users_view.dart';
 
-import 'change_screen.dart';
+import '../util/change_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
 
