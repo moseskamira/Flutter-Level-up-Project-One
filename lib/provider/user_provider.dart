@@ -10,9 +10,7 @@ class UserProvider with ChangeNotifier {
   UserHelper userHelper = UserHelper();
   List<User> users = [];
 
-  UserProvider.initializeUsersList() {
-    _loadUsers();
-  }
+  UserProvider.initializeUsersList() {}
 
   GlobalKey<FormState> get formKey => _formKey;
 
@@ -26,17 +24,18 @@ class UserProvider with ChangeNotifier {
     };
   }
 
-  void _loadUsers() async {
+  void loadUsers() async {
     users = await userHelper.getUsers(urlEndPoint: getPath());
     notifyListeners();
   }
 
-  Future<String> postUserData(
-      {String name,
-      int id,
-      String image,
-      String urlProfile,
-      String type}) async {
+  Future<String> postUserData({
+    String name,
+    int id,
+    String image,
+    String urlProfile,
+    String type,
+  }) async {
     User newUser = User(
       id: id,
       userName: name,
@@ -44,12 +43,10 @@ class UserProvider with ChangeNotifier {
       profileImage: image,
       userType: type,
     );
-
-    String postResponse = await userHelper.saveUser(
+    return await userHelper.saveUser(
       userObject: newUser,
       urlEndPoint: getPath(),
       regHeader: getRegHeader(),
     );
-    return postResponse;
   }
 }
