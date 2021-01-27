@@ -7,10 +7,6 @@ class UserProvider with ChangeNotifier {
   static const url = "https://api.github.com/";
   final _formKey = GlobalKey<FormState>();
 
-  String getPath() {
-    return url + "search/users?q=type:User+location:Kampala+language:JAVA";
-  }
-
   UserHelper userHelper = UserHelper();
   List<User> users = [];
 
@@ -18,15 +14,42 @@ class UserProvider with ChangeNotifier {
     _loadUsers();
   }
 
-  void _loadUsers() async {
-    try {
-      users = await userHelper.getUsers(getPath());
-      notifyListeners();
-    } catch (e) {
-      notifyListeners();
-      print('ERROR: ' + e.toString());
-    }
+  GlobalKey<FormState> get formKey => _formKey;
+
+  static String getPath() {
+    return url + "search/users?q=type:User+location:Kampala+language:JAVA";
   }
 
-  GlobalKey<FormState> get formKey => _formKey;
+  static Map<String, String> getRegHeader() {
+    return {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+  }
+
+  void _loadUsers() async {
+    users = await userHelper.getUsers(urlEndPoint: getPath());
+    notifyListeners();
+  }
+
+  Future<String> postUserData(
+      {String name,
+      int id,
+      String image,
+      String urlProfile,
+      String type}) async {
+    User newUser = User(
+      id: id,
+      userName: name,
+      profileUrl: urlProfile,
+      profileImage: image,
+      userType: type,
+    );
+
+    String postResponse = await userHelper.saveUser(
+      userObject: newUser,
+      urlEndPoint: getPath(),
+      regHeader: getRegHeader(),
+    );
+    return postResponse;
+  }
 }

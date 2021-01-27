@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myFlutterApp/models/user_model.dart';
+import 'package:myFlutterApp/widgets/user_details_widget.dart';
 
 class DetailScreen extends StatelessWidget {
   final User detailedUser;
@@ -13,57 +14,7 @@ class DetailScreen extends StatelessWidget {
         title: Text('USER DETAILS'),
       ),
       backgroundColor: Colors.white,
-      body: new Container(
-        color: Colors.white,
-        alignment: Alignment.topLeft,
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Image(
-                image: NetworkImage(detailedUser.profileImage),
-              ),
-            ),
-            Container(
-              child: Text(
-                detailedUser.userName,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontFamily: 'Aleo',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    color: Colors.black),
-              ),
-            ),
-            Container(
-              child: Text(
-                detailedUser.id.toString(),
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontFamily: 'Aleo',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 24.0,
-                    color: Colors.black),
-              ),
-            ),
-            Container(
-              child: Text(
-                detailedUser.userType,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    fontFamily: 'Aleo',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 24.0,
-                    color: Colors.black),
-              ),
-            ),
-          ],
-        ),
-      ),
+      body: UserDetailsWidget(user: detailedUser),
     );
   }
 }
