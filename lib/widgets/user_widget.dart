@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myFlutterApp/provider/user_provider.dart';
 import 'package:myFlutterApp/screens/user_details.dart';
+import 'package:myFlutterApp/widgets/custom_text.dart';
 import 'package:myFlutterApp/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -12,11 +13,7 @@ class UserWidget extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
     userProvider.loadUsers();
     return userProvider.users.isEmpty
-        ? Container(
-            child: Center(
-              child: LoadingWidget(),
-            ),
-          )
+        ? Center(child: LoadingWidget())
         : Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -25,11 +22,8 @@ class UserWidget extends StatelessWidget {
               itemCount: userProvider.users.length,
               itemBuilder: (context, index) => Card(
                 child: ListTile(
-                  title: Text(userProvider.users[index].userName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20,
-                      )),
+                  title: CustomText(text: userProvider.users[index].userName
+                  ),
                   subtitle: Text(userProvider.users[index].profileUrl),
                   leading: Container(
                     width: 80.0,

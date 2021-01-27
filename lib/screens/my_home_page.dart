@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myFlutterApp/provider/user_provider.dart';
 import 'package:myFlutterApp/widgets/drawer.dart';
+import 'package:myFlutterApp/widgets/page_title_text.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -253,10 +254,10 @@ class _FormScreenState extends State<MyHomePage> {
       );
 
   Widget buildHomePageTitle() => Container(
-        margin: const EdgeInsets.symmetric(vertical: 20.0),
+        margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(4),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(2),
         ),
         child: Text(
           'USER REG FORM',
@@ -265,6 +266,31 @@ class _FormScreenState extends State<MyHomePage> {
             fontWeight: FontWeight.bold,
             color: Colors.black,
             decoration: TextDecoration.none,
+          ),
+        ),
+      );
+
+  Widget buildSubmitButton(UserProvider myProvider) => Container(
+        margin: const EdgeInsets.all(8),
+        child: RaisedButton(
+          color: Colors.grey,
+          textColor: Colors.black,
+          onPressed: () {
+            if (!myProvider.formKey.currentState.validate()) {
+              return;
+            }
+            myProvider.formKey.currentState.save();
+            print(selectedNationality);
+            print(email);
+            print(dropdownValue.toUpperCase());
+            print(phoneNumber);
+          },
+          child: Text(
+            'Submit'.toUpperCase(),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       );
@@ -314,60 +340,47 @@ class _FormScreenState extends State<MyHomePage> {
         iconTheme: IconThemeData(
           color: Colors.black,
         ),
-        title: Text('U.M.S'),
+        title: PageTitleText(
+          titleText: 'U.M.S',
+          textColor: Colors.white,
+        ),
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          margin: const EdgeInsets.all(8),
-          child: Form(
-            key: provider.formKey,
-            autovalidateMode: AutovalidateMode.disabled,
-            onChanged: () {
-              Form.of(primaryFocus.context).save();
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                buildHomePageTitle(),
-                buildUserName(),
-                buildEmail(),
-                buildPhoneNumber(),
-                buildPassword(),
-                buildGenderDropDownRow(),
-                buildRadioBtnRow(),
-                buildCheckBoxRow(),
-                buildFileUploader(),
-                SizedBox(height: 5),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: RaisedButton(
-                    color: Colors.grey,
-                    textColor: Colors.black,
-                    onPressed: () {
-                      if (!provider.formKey.currentState.validate()) {
-                        return;
-                      }
-                      provider.formKey.currentState.save();
-                      print(selectedNationality);
-                      print(email);
-                      print(dropdownValue.toUpperCase());
-                      print(phoneNumber);
-                    },
-                    child: Text(
-                      'Submit'.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        margin: const EdgeInsets.all(8),
+        child: Form(
+          key: provider.formKey,
+          autovalidateMode: AutovalidateMode.disabled,
+          onChanged: () {
+            Form.of(primaryFocus.context).save();
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: PageTitleText(
+                  titleText: 'USER REG FORM',
+                  textColor: Colors.black,
                 ),
-              ],
-            ),
+              ),
+              Expanded(child: buildUserName()),
+              Expanded(child: buildEmail()),
+              Expanded(child: buildPhoneNumber()),
+              Expanded(child: buildPassword()),
+              Expanded(child: buildGenderDropDownRow()),
+              Expanded(child: buildRadioBtnRow()),
+              Expanded(child: buildCheckBoxRow()),
+              Expanded(child: buildFileUploader()),
+              Expanded(child: buildSubmitButton(provider)),
+            ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Add',
+        child: Icon(Icons.add),
+        onPressed: null,
       ),
       drawer: DrawerWidget(),
     );
