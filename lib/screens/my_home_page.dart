@@ -364,15 +364,33 @@ class _FormScreenState extends State<MyHomePage> {
                   textColor: Colors.black,
                 ),
               ),
-              Expanded(child: buildUserName()),
-              Expanded(child: buildEmail()),
-              Expanded(child: buildPhoneNumber()),
-              Expanded(child: buildPassword()),
-              Expanded(child: buildGenderDropDownRow()),
-              Expanded(child: buildRadioBtnRow()),
-              Expanded(child: buildCheckBoxRow()),
-              Expanded(child: buildFileUploader()),
-              Expanded(child: buildSubmitButton(provider)),
+              Expanded(
+                child: buildUserName(),
+              ),
+              Expanded(
+                child: buildEmail(),
+              ),
+              Expanded(
+                child: buildPhoneNumber(),
+              ),
+              Expanded(
+                child: buildPassword(),
+              ),
+              Expanded(
+                child: buildGenderDropDownRow(),
+              ),
+              Expanded(
+                child: buildRadioBtnRow(),
+              ),
+              Expanded(
+                child: buildCheckBoxRow(),
+              ),
+              Expanded(
+                child: buildFileUploader(),
+              ),
+              Expanded(
+                child: buildSubmitButton(provider),
+              ),
             ],
           ),
         ),
