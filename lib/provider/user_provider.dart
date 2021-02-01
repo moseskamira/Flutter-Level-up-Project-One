@@ -10,7 +10,7 @@ class UserProvider with ChangeNotifier {
   UserHelper userHelper = UserHelper();
   List<User> users = [];
 
-  UserProvider.initializeUsersList() {}
+  UserProvider.initializeUsersList();
 
   GlobalKey<FormState> get formKey => _formKey;
 

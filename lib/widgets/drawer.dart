@@ -4,7 +4,6 @@ import 'package:myFlutterApp/screens/users_view.dart';
 import '../util/change_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
-
   Widget buildDrawerHeader() => DrawerHeader(
       decoration: BoxDecoration(
         color: Colors.blue,
