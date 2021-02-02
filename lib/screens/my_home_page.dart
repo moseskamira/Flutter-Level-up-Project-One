@@ -359,37 +359,43 @@ class _FormScreenState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: PageTitleText(
-                  titleText: 'USER REG FORM',
-                  textColor: Colors.black,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: PageTitleText(
+                        titleText: 'USER REG FORM',
+                        textColor: Colors.black,
+                      ),
+                    ),
+                    Expanded(
+                      child: buildUserName(),
+                    ),
+                    Expanded(
+                      child: buildEmail(),
+                    ),
+                    Expanded(
+                      child: buildPhoneNumber(),
+                    ),
+                    Expanded(
+                      child: buildPassword(),
+                    ),
+                    Expanded(
+                      child: buildGenderDropDownRow(),
+                    ),
+                    Expanded(
+                      child: buildRadioBtnRow(),
+                    ),
+                    Expanded(
+                      child: buildCheckBoxRow(),
+                    ),
+                    Expanded(
+                      child: buildFileUploader(),
+                    ),
+                    Expanded(
+                      child: buildSubmitButton(provider),
+                    ),
+                  ],
                 ),
-              ),
-              Expanded(
-                child: buildUserName(),
-              ),
-              Expanded(
-                child: buildEmail(),
-              ),
-              Expanded(
-                child: buildPhoneNumber(),
-              ),
-              Expanded(
-                child: buildPassword(),
-              ),
-              Expanded(
-                child: buildGenderDropDownRow(),
-              ),
-              Expanded(
-                child: buildRadioBtnRow(),
-              ),
-              Expanded(
-                child: buildCheckBoxRow(),
-              ),
-              Expanded(
-                child: buildFileUploader(),
-              ),
-              Expanded(
-                child: buildSubmitButton(provider),
               ),
             ],
           ),
