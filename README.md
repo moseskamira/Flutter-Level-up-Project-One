@@ -3,7 +3,7 @@
 This project is intended to levelup on Flutter as a framework and Dart as a programming language.
 
 ## Description:
-- The project enables one to add user, view a list of users, view user details as well as update user information.
+- The project enables one to register user, view a list of github users and viewing github user details.
 - More functionalities shall be added later being a levelup project.
 
 ## Navigation Drawer:

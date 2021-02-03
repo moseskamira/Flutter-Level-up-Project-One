@@ -8,22 +8,28 @@ import '../models/api_response.dart';
 import '../models/user_model.dart';
 
 class UserService {
-  static String getUsersPath() => AppUrls.baseUrl + AppUrls.usersUrl;
-
   var client = http.Client();
   List<User> usersList = [];
 
-  static Map<String, String> getRegHeader() => {
-        'Content-Type': 'application/json',
+  static String getUsersPath() => AppUrls.baseUrl + AppUrls.usersUrl;
+
+  static String getSingleUserPAth() => AppUrls.baseUrl + AppUrls.singleUserUrl;
+
+  static Map<String, String> getHeader() => {
+        "Accept": "application/json",
+        "Key": "",
       };
 
-  Future<APIResponse<List<User>>> getUsers() async =>
-      await client.get(getUsersPath()).then(
+  Future<APIResponse<List<User>>> getUsers() async => await client
+          .get(
+        Uri.encodeFull(getUsersPath()),
+        headers: getHeader(),
+      )
+          .then(
         (response) {
           if (response.statusCode == 200) {
-            var jsonString = response.body;
-            print('STRING: $jsonString');
-            var jsonMap = jsonDecode(jsonString)['items'];
+            final jsonString = response.body;
+            final jsonMap = jsonDecode(jsonString)['items'];
 
             print(jsonMap.toString());
             for (var singleItem in jsonMap) {
@@ -38,15 +44,18 @@ class UserService {
                 error: true, errorMessage: 'An Error Occurred');
           }
         },
-      ).catchError((_) => APIResponse<List<User>>(
-          error: true, errorMessage: 'An Error Occurred While Fetching Users'));
+      ).catchError(
+        (_) => APIResponse<List<User>>(
+            error: true,
+            errorMessage: 'An Error Occurred While Fetching Users'),
+      );
 
   Future<APIResponse<User>> getUserByUserName(
           {@required String userName}) async =>
-      await client.get(AppUrls.baseUrl + AppUrls.singleUserUrl + userName).then(
+      await client.get(Uri.encodeFull(getSingleUserPAth() + userName)).then(
         (userResp) {
           if (userResp.statusCode == 200) {
-            var jsonString = userResp.body;
+            final jsonString = userResp.body;
             final jsonMap = jsonDecode(jsonString);
             User user = User.fromJsonConverter(jsonMap);
             print(user);
@@ -66,7 +75,7 @@ class UserService {
 
   Future<APIResponse<bool>> saveUser(User userObject) async => await http
           .post(getUsersPath(),
-              headers: getRegHeader(),
+              headers: getHeader(),
               body: jsonEncode(userObject.toJsonConverter()))
           .then((response) {
         if (response.statusCode == 201) {
