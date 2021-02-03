@@ -1,23 +1,35 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:myFlutterApp/models/api_response.dart';
-import 'package:myFlutterApp/models/user_model.dart';
+import '../api/app_urls.dart';
+import '../models/api_response.dart';
+import '../models/user_model.dart';
 
 class UserService {
+  static String getUsersPath() => AppUrls.baseUrl + AppUrls.usersUrl;
+
+  var client = http.Client();
   List<User> usersList = [];
 
-  Future<APIResponse<List<User>>> getUsers(
-          {@required String urlEndPoint}) async =>
-      await http.get(urlEndPoint).then(
+  static Map<String, String> getRegHeader() => {
+        'Content-Type': 'application/json',
+      };
+
+  Future<APIResponse<List<User>>> getUsers() async =>
+      await client.get(getUsersPath()).then(
         (response) {
           if (response.statusCode == 200) {
-            List jsonDataList = jsonDecode(response.body)['items'];
-            print(jsonDataList.toString());
-            usersList = jsonDataList
-                .map((user) => User.fromJsonConverter(user))
-                .toList();
+            var jsonString = response.body;
+            print('STRING: $jsonString');
+            var jsonMap = jsonDecode(jsonString)['items'];
+
+            print(jsonMap.toString());
+            for (var singleItem in jsonMap) {
+              usersList.add(User.fromJsonConverter(singleItem));
+              // usersList = jsonDataList.map((user) => User.fromJsonConverter(user)).toList();
+            }
             return APIResponse<List<User>>(
               data: usersList,
             );
@@ -26,30 +38,46 @@ class UserService {
                 error: true, errorMessage: 'An Error Occurred');
           }
         },
+      ).catchError((_) => APIResponse<List<User>>(
+          error: true, errorMessage: 'An Error Occurred While Fetching Users'));
+
+  Future<APIResponse<User>> getUserByUserName(
+          {@required String userName}) async =>
+      await client.get(AppUrls.baseUrl + AppUrls.singleUserUrl + userName).then(
+        (userResp) {
+          if (userResp.statusCode == 200) {
+            var jsonString = userResp.body;
+            final jsonMap = jsonDecode(jsonString);
+            User user = User.fromJsonConverter(jsonMap);
+            print(user);
+            return APIResponse<User>(
+              data: user,
+            );
+          } else {
+            return APIResponse<User>(
+                error: true, errorMessage: 'An Error Occurred');
+          }
+        },
+      ).catchError(
+        (_) => APIResponse<User>(
+            error: true,
+            errorMessage: 'An Error Occurred While Fetching Users'),
       );
 
-  Future<String> saveUser({
-    @required User userObject,
-    @required String urlEndPoint,
-    @required Map<String, dynamic> regHeader,
-  }) async =>
-      await http
-          .post(
-        urlEndPoint,
-        headers: regHeader,
-        body: jsonEncode(<String, dynamic>{
-          User.USERNAME: userObject.userName,
-          User.PROFILEIMAGE: userObject.profileImage,
-          User.USERTYPE: userObject.userType,
-          User.PROFILEURL: userObject.profileUrl,
-          User.USERID: userObject.id,
-        }),
-      )
+  Future<APIResponse<bool>> saveUser(User userObject) async => await http
+          .post(getUsersPath(),
+              headers: getRegHeader(),
+              body: jsonEncode(userObject.toJsonConverter()))
           .then((response) {
         if (response.statusCode == 201) {
-          return response.body;
+          return APIResponse<bool>(data: true);
         } else {
-          throw Exception('Failed to create new user.');
+          return APIResponse<bool>(
+              error: true, errorMessage: 'An Error Occurred');
         }
-      });
+      }).catchError(
+        (_) => APIResponse<bool>(
+            error: true,
+            errorMessage: 'An Error Occurred While Fetching Users'),
+      );
 }

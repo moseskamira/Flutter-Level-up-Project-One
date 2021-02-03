@@ -39,6 +39,16 @@ class User {
         _profileImage = user[PROFILEIMAGE],
         _userType = user[USERTYPE];
 
+  Map<String, dynamic> toJsonConverter() {
+    return {
+      User.USERNAME: userName,
+      User.PROFILEIMAGE: profileImage,
+      User.USERTYPE: userType,
+      User.PROFILEURL: profileUrl,
+      User.USERID: id,
+    };
+  }
+
   @override
   String toString() {
     return '''

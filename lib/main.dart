@@ -7,7 +7,6 @@ import 'package:myFlutterApp/provider/user_provider.dart';
 
 void setUpLocator() {
   GetIt.I.registerLazySingleton(() => UserService());
-
 }
 
 void main() {
