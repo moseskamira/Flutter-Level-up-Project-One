@@ -45,6 +45,7 @@ dev_dependencies:
   retrofit_generator: any
   test: ^1.15.7
   image_test_utils: ^1.0.0
+  mockito: ^3.0.0
 
 flutter:
   assets:

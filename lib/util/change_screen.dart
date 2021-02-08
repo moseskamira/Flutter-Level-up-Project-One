@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-Future changeScreen(BuildContext context, Widget widget) async {
-  Navigator.of(context).push(MaterialPageRoute(builder: (_) => widget));
-}
+class ChangeScreen {
+  static Future changeScreen(BuildContext context, Widget widget) async {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => widget));
+    // Navigator.push(context, MaterialPageRoute(builder: (_) => widget));
+  }
 
-Future loadPreviousScreen(BuildContext context) async {
-  Navigator.of(context).pop();
+  static Future loadPreviousScreen(BuildContext context) async {
+    Navigator.of(context).pop();
+  }
 }

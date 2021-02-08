@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myFlutterApp/provider/user_provider.dart';
+import 'package:myFlutterApp/util/form_input_validations.dart';
 import 'package:myFlutterApp/widgets/drawer.dart';
 import 'package:myFlutterApp/widgets/page_title_text.dart';
 import 'package:provider/provider.dart';
@@ -40,14 +41,7 @@ class _FormScreenState extends State<MyHomePage> {
             icon: Icon(Icons.person),
           ),
           keyboardType: TextInputType.name,
-          validator: (String value) {
-            if (value.isEmpty) {
-              return 'UserName Required!';
-            } else if (value.length < 3) {
-              return 'Acceptable minimum number of characters is: 3 !';
-            }
-            return null;
-          },
+          validator: UserNameValidator.validateUserName,
           onSaved: (String value) => setState(() => userName = value),
         ),
       );
@@ -67,16 +61,7 @@ class _FormScreenState extends State<MyHomePage> {
               icon: Icon(Icons.email),
             ),
             keyboardType: TextInputType.emailAddress,
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'userEmail Required !';
-              } else if (!RegExp(
-                      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                  .hasMatch(value)) {
-                return 'Enter Valid Email Address !';
-              }
-              return null;
-            },
+            validator: EmailValidator.validateEmail,
             onSaved: (String value) => setState(() => email = value)),
       );
 
@@ -94,12 +79,7 @@ class _FormScreenState extends State<MyHomePage> {
             icon: Icon(Icons.lock),
           ),
           obscureText: true,
-          validator: (String value) {
-            if (value.isEmpty) {
-              return 'Password Required !';
-            }
-            return null;
-          },
+          validator: PasswordValidator.validatePassword,
           onSaved: (value) => setState(() => password = value),
         ),
       );
