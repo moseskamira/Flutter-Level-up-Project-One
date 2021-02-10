@@ -26,33 +26,5 @@ void main() {
       expect(textFiner.toString(), matcher.isNotEmpty);
       expect(textFiner.toString(), matcher.isNotNull);
     });
-    test('Empty string passed', () {
-      // Arrange
-      var customText = CustomText(
-        text: '',
-      );
-      // Assert
-      expect(customText.text, matcher.isEmpty);
-    });
-
-    test('Value should be as passed', () {
-      // Arrange
-      var titleText = 'My Flutter App';
-      var customText = CustomText(
-        text: titleText,
-      );
-      // Assert
-      expect(customText.text, titleText);
-    });
-
-    test('Null value provided', () {
-      // Arrange
-      var titleText;
-      var customText = CustomText(
-        text: titleText,
-      );
-      // Assert
-      expect(customText.text, matcher.isNull);
-    });
   });
 }

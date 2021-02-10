@@ -19,7 +19,8 @@ void main() {
       userDetailsWidget = UserDetailsWidget(user: detailedUser);
     });
 
-    testWidgets('UserDetailsWidget  takes in a User Instance, displays the details of that user',
+    testWidgets(
+        'UserDetailsWidget  takes in a User Instance, displays the details of that user',
         (WidgetTester tester) async {
       provideMockedNetworkImages(() async {
         Widget testWidget = MediaQuery(
@@ -29,8 +30,11 @@ void main() {
           ),
         );
         await tester.pumpWidget(testWidget);
-        final userFiner = find.byKey(Key(userDetailsWidget.user.userName));
-        expect(userFiner.toString(), matcher.contains('Moses'));
+        final userFiner = find.text(userDetailsWidget.user.userName);
+        expect(
+          userFiner,
+          findsOneWidget,
+        );
       });
     });
   });

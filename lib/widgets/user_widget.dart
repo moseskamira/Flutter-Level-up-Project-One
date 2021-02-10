@@ -56,7 +56,7 @@ class UserWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onTap: () => changeScreen(
+                    onTap: () => ChangeScreen.changeScreen(
                       context,
                       DetailScreen(detailedUser: userProvider.users[index]),
                     ),

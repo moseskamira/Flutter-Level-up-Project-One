@@ -35,11 +35,11 @@ class DrawerWidget extends StatelessWidget {
           buildDrawerHeader(),
           ListTile(
             title: Text('View Users List'),
-            onTap: () => changeScreen(context, UsersView()),
+            onTap: () => ChangeScreen.changeScreen(context, UsersView()),
           ),
           ListTile(
             title: Text('Update User Info'),
-            onTap: () => loadPreviousScreen(context),
+            onTap: () => ChangeScreen.loadPreviousScreen(context),
           ),
         ],
       ),
