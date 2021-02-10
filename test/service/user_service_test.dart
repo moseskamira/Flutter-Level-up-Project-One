@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:myFlutterApp/api/app_urls.dart';
-import 'package:http/http.dart' as http;
-import 'package:myFlutterApp/models/api_response.dart';
 import 'package:myFlutterApp/models/user_model.dart';
 import 'package:matcher/matcher.dart' as matcher;
 
