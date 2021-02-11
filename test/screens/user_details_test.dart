@@ -9,25 +9,24 @@ import 'package:myFlutterApp/widgets/page_title_text.dart';
 void main() {
   group('DetailScreen Test', () {
     User detailedUser;
-    DetailScreen detailScreen;
     setUp(() {
       detailedUser = User(
           userName: 'Moses Kamira',
           profileImage: 'https://avatars.githubusercontent.com/u/42971167?v=4',
           profileUrl: 'https:moseskt.com',
           userType: 'user');
-      detailScreen = DetailScreen(detailedUser: detailedUser);
     });
 
     testWidgets("Displays 'USER DETAILS' text", (WidgetTester tester) async {
       provideMockedNetworkImages(() async {
-        Widget testWidget = MediaQuery(
-          data: new MediaQueryData(),
-          child: new MaterialApp(
-            home: detailScreen,
+        await tester.pumpWidget(
+          MediaQuery(
+            data: MediaQueryData(),
+            child: MaterialApp(
+              home: DetailScreen(detailedUser: detailedUser),
+            ),
           ),
         );
-        await tester.pumpWidget(testWidget);
         expect(
           find.widgetWithText(PageTitleText, 'USER DETAILS'),
           findsOneWidget,
