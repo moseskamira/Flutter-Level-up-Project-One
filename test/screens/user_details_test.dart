@@ -3,36 +3,33 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:myFlutterApp/models/user_model.dart';
-import 'package:matcher/matcher.dart' as matcher;
-import 'package:myFlutterApp/widgets/user_details_widget.dart';
+import 'package:myFlutterApp/screens/user_details.dart';
+import 'package:myFlutterApp/widgets/page_title_text.dart';
 
 void main() {
-  group('UserDetailsWidget Test', () {
+  group('DetailScreen Test', () {
     User detailedUser;
-    UserDetailsWidget userDetailsWidget;
+    DetailScreen detailScreen;
     setUp(() {
       detailedUser = User(
           userName: 'Moses Kamira',
           profileImage: 'https://avatars.githubusercontent.com/u/42971167?v=4',
           profileUrl: 'https:moseskt.com',
           userType: 'user');
-      userDetailsWidget = UserDetailsWidget(user: detailedUser);
+      detailScreen = DetailScreen(detailedUser: detailedUser);
     });
 
-    testWidgets(
-        'UserDetailsWidget  takes in a User Instance, displays the details of that user',
-        (WidgetTester tester) async {
+    testWidgets("Displays 'USER DETAILS' text", (WidgetTester tester) async {
       provideMockedNetworkImages(() async {
         Widget testWidget = MediaQuery(
           data: new MediaQueryData(),
           child: new MaterialApp(
-            home: userDetailsWidget,
+            home: detailScreen,
           ),
         );
         await tester.pumpWidget(testWidget);
-        final userFiner = find.text(userDetailsWidget.user.userName);
         expect(
-          userFiner,
+          find.widgetWithText(PageTitleText, 'USER DETAILS'),
           findsOneWidget,
         );
       });

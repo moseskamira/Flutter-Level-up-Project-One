@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myFlutterApp/provider/user_provider.dart';
 import 'package:myFlutterApp/util/form_input_validations.dart';
+import 'package:myFlutterApp/widgets/custom_text.dart';
 import 'package:myFlutterApp/widgets/drawer.dart';
 import 'package:myFlutterApp/widgets/page_title_text.dart';
 import 'package:provider/provider.dart';
@@ -250,16 +251,16 @@ class _FormScreenState extends State<MyHomePage> {
         ),
       );
 
-  Widget buildSubmitButton(UserProvider myProvider) => Container(
+  Widget buildSubmitButton(GlobalKey<FormState> formKey) => Container(
         margin: const EdgeInsets.all(8),
         child: RaisedButton(
           color: Colors.grey,
           textColor: Colors.black,
           onPressed: () {
-            if (!myProvider.formKey.currentState.validate()) {
+            if (!formKey.currentState.validate()) {
               return;
             }
-            myProvider.formKey.currentState.save();
+            formKey.currentState.save();
             print(selectedNationality);
             print(email);
             print(dropdownValue.toUpperCase());
@@ -311,7 +312,8 @@ class _FormScreenState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<UserProvider>(context);
+    // final provider = Provider.of<UserProvider>(context);
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -330,7 +332,7 @@ class _FormScreenState extends State<MyHomePage> {
         height: MediaQuery.of(context).size.height,
         margin: const EdgeInsets.all(8),
         child: Form(
-          key: provider.formKey,
+          key: _formKey,
           autovalidateMode: AutovalidateMode.disabled,
           onChanged: () {
             Form.of(primaryFocus.context).save();
@@ -342,9 +344,8 @@ class _FormScreenState extends State<MyHomePage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: PageTitleText(
-                        titleText: 'USER REG FORM',
-                        textColor: Colors.black,
+                      child: CustomText(
+                        text: 'USER REG FORM',
                       ),
                     ),
                     Expanded(
@@ -372,7 +373,7 @@ class _FormScreenState extends State<MyHomePage> {
                       child: buildFileUploader(),
                     ),
                     Expanded(
-                      child: buildSubmitButton(provider),
+                      child: buildSubmitButton(_formKey),
                     ),
                   ],
                 ),
