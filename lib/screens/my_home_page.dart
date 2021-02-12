@@ -1,12 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myFlutterApp/provider/user_provider.dart';
 import 'package:myFlutterApp/util/form_input_validations.dart';
 import 'package:myFlutterApp/widgets/custom_text.dart';
 import 'package:myFlutterApp/widgets/drawer.dart';
 import 'package:myFlutterApp/widgets/page_title_text.dart';
-import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -16,6 +14,7 @@ class MyHomePage extends StatefulWidget {
 class _FormScreenState extends State<MyHomePage> {
   List<String> spinnerItems = ['Male', 'Female', 'Prefer Not To Say'];
   List nationality = ["Ugandan", "Other"];
+  final _formKey = GlobalKey<FormState>();
 
   String dropdownValue,
       selectedNationality,
@@ -42,7 +41,8 @@ class _FormScreenState extends State<MyHomePage> {
             icon: Icon(Icons.person),
           ),
           keyboardType: TextInputType.name,
-          validator: UserNameValidator.validateUserName,
+          validator: (String value) =>
+              UserNameValidator.validateUserName(value),
           onSaved: (String value) => setState(() => userName = value),
         ),
       );
@@ -251,16 +251,16 @@ class _FormScreenState extends State<MyHomePage> {
         ),
       );
 
-  Widget buildSubmitButton(GlobalKey<FormState> formKey) => Container(
+  Widget buildSubmitButton() => Container(
         margin: const EdgeInsets.all(8),
         child: RaisedButton(
           color: Colors.grey,
           textColor: Colors.black,
           onPressed: () {
-            if (!formKey.currentState.validate()) {
+            if (!_formKey.currentState.validate()) {
               return;
             }
-            formKey.currentState.save();
+            _formKey.currentState.save();
             print(selectedNationality);
             print(email);
             print(dropdownValue.toUpperCase());
@@ -313,7 +313,7 @@ class _FormScreenState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     // final provider = Provider.of<UserProvider>(context);
-    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -373,7 +373,7 @@ class _FormScreenState extends State<MyHomePage> {
                       child: buildFileUploader(),
                     ),
                     Expanded(
-                      child: buildSubmitButton(_formKey),
+                      child: buildSubmitButton(),
                     ),
                   ],
                 ),
