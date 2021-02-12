@@ -5,22 +5,18 @@ import 'package:matcher/matcher.dart' as matcher;
 
 void main() {
   group('PageTitleText Test', () {
-    PageTitleText pageTitleText;
-    setUp(() {
-      pageTitleText =
-          PageTitleText(titleText: 'New App', textColor: Colors.black);
-    });
     testWidgets('PageTitleText widget is loaded with a Text',
         (WidgetTester tester) async {
-      Widget pageTitleTextWidget = new MediaQuery(
-        data: new MediaQueryData(),
-        child: new MaterialApp(
-          home: pageTitleText,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: PageTitleText(
+            titleText: 'New App',
+            textColor: Colors.black,
+          ),
         ),
       );
-      await tester.pumpWidget(pageTitleTextWidget);
 
-      final widgetFinder = find.text(pageTitleText.titleText);
+      final widgetFinder = find.text('New App');
       expect(widgetFinder, matcher.isNotNull);
       expect(widgetFinder, findsOneWidget);
     });

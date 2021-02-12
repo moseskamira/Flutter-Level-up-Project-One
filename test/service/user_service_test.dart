@@ -32,7 +32,7 @@ void main() {
         User user = User.fromJsonConverter(jsonMap);
         print(user.id);
         expect(user, matcher.TypeMatcher<User>());
-        expect(user.id, matcher.equals(42971167));
+        expect(user.id, 42971167);
       },
     );
   });
