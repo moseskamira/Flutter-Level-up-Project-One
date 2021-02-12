@@ -23,7 +23,7 @@ void main() {
       await tester.pump();
       expect(find.text('USER REG FORM'), findsOneWidget);
     });
-    test('Empty username returns an error', () {
+    test('Empty username field returns an error', () {
       final result = UserNameValidator.validateUserName('');
       expect(result, 'UserName Required!');
     });
