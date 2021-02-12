@@ -254,6 +254,7 @@ class _FormScreenState extends State<MyHomePage> {
   Widget buildSubmitButton() => Container(
         margin: const EdgeInsets.all(8),
         child: RaisedButton(
+          key: Key('submitKey'),
           color: Colors.grey,
           textColor: Colors.black,
           onPressed: () {
@@ -338,7 +339,9 @@ class _FormScreenState extends State<MyHomePage> {
             Form.of(primaryFocus.context).save();
           },
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(

@@ -6,15 +6,11 @@ import 'package:myFlutterApp/models/user_model.dart';
 import 'package:myFlutterApp/service/user_service.dart';
 
 class UserProvider with ChangeNotifier {
-  final _formKey = GlobalKey<FormState>();
-
   UserService get userHelper => GetIt.I<UserService>();
   var users = [];
   var singleUser;
 
   UserProvider.initializeUsersList();
-
-  GlobalKey<FormState> get formKey => _formKey;
 
   void loadUsers() async {
     APIResponse<List<User>> responseData = await userHelper.getUsers();

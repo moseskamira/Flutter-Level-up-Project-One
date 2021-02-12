@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:myFlutterApp/models/user_model.dart';
 import 'package:myFlutterApp/screens/user_details.dart';
+import 'package:myFlutterApp/util/make_testable.dart';
 import 'package:myFlutterApp/widgets/page_title_text.dart';
 
 void main() {
@@ -20,11 +21,8 @@ void main() {
     testWidgets("Displays 'USER DETAILS' text", (WidgetTester tester) async {
       provideMockedNetworkImages(() async {
         await tester.pumpWidget(
-          MediaQuery(
-            data: MediaQueryData(),
-            child: MaterialApp(
-              home: DetailScreen(detailedUser: detailedUser),
-            ),
+          MakeTestable.returnTestableWidget(
+            DetailScreen(detailedUser: detailedUser),
           ),
         );
         expect(

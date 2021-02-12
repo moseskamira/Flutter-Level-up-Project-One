@@ -1,10 +1,18 @@
-# myFlutterApp
+# FlutterLevelUpProject
 
 This project is intended to levelup on Flutter as a framework and Dart as a programming language.
 
 ## Description:
-- The project enables one to register user, view a list of github users and viewing github user details.
+
+- The project involves implementing TDD where both Widget and Unit tests were written.
+
+- Features implemented include user being able to register user, view a list of github users and viewing github user details
+
 - More functionalities shall be added later being a levelup project.
+
+## Running Tests:
+
+- To run all the tests, issue the command: 'flutter test test/' from the root directory
 
 ## Navigation Drawer:
 ![List developers](/assets/images/drawer.png)
