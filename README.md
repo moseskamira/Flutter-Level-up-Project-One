@@ -73,6 +73,3 @@ flutter build apk
 
 ![List developers](/assets/images/details.png)
 
-## Note:
-
-- All implementation is done in the lib folder.
