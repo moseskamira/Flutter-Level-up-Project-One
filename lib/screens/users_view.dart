@@ -9,10 +9,9 @@ class UsersView extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: PageTitleText(
-          titleText: 'U.M.S',
+          titleText: 'Kampala Java Devs',
           textColor: Colors.white,
         ),
-        brightness: Brightness.light,
       ),
       backgroundColor: Colors.white,
       body: UserWidget(),

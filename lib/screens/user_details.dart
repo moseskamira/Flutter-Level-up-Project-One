@@ -13,9 +13,10 @@ class DetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitleText(
-          titleText: 'USER DETAILS',
-          textColor: Colors.black,
+          titleText: 'Dev Details',
+          textColor: Colors.white,
         ),
+        centerTitle: true,
       ),
       backgroundColor: Colors.white,
       body: UserDetailsWidget(user: detailedUser),

@@ -20,7 +20,7 @@ class _FormScreenState extends State<MyHomePage> {
           color: Colors.black,
         ),
         title: PageTitleText(
-          titleText: 'U.M.S',
+          titleText: 'Kampala Java Devs',
           textColor: Colors.white,
         ),
       ),
