@@ -16,7 +16,7 @@ class _FormScreenState extends State<MyHomePage> {
   List nationality = ["Ugandan", "Other"];
   final _formKey = GlobalKey<FormState>();
 
-  String dropdownValue,
+  late String dropdownValue,
       selectedNationality,
       userName,
       email,
@@ -26,213 +26,213 @@ class _FormScreenState extends State<MyHomePage> {
   bool _isCheckedFb = false;
   bool _isCheckedLn = false;
 
-  Widget buildUserName() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: TextFormField(
-          autocorrect: true,
-          decoration: InputDecoration(
-            labelText: 'Enter Your Name',
-            border: InputBorder.none,
-            icon: Icon(Icons.person),
-          ),
-          keyboardType: TextInputType.name,
-          validator: (String value) =>
-              UserNameValidator.validateUserName(value),
-          onSaved: (String value) => setState(() => userName = value),
-        ),
-      );
+  // Widget buildUserName() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(
+  //           color: Colors.grey,
+  //         ),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: TextFormField(
+  //         autocorrect: true,
+  //         decoration: InputDecoration(
+  //           labelText: 'Enter Your Name',
+  //           border: InputBorder.none,
+  //           icon: Icon(Icons.person),
+  //         ),
+  //         keyboardType: TextInputType.name,
+  //         validator: (String? value) =>
+  //             UserNameValidator.validateUserName(value),
+  //         onSaved: (String value) => setState(() => userName = value),
+  //       ),
+  //     );
 
-  Widget buildEmail() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: TextFormField(
-            // controller: ,
-            decoration: InputDecoration(
-              labelText: 'Enter Your Email',
-              border: InputBorder.none,
-              icon: Icon(Icons.email),
-            ),
-            keyboardType: TextInputType.emailAddress,
-            validator: EmailValidator.validateEmail,
-            onSaved: (String value) => setState(() => email = value)),
-      );
+  // Widget buildEmail() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(
+  //           color: Colors.grey,
+  //         ),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: TextFormField(
+  //           // controller: ,
+  //           decoration: InputDecoration(
+  //             labelText: 'Enter Your Email',
+  //             border: InputBorder.none,
+  //             icon: Icon(Icons.email),
+  //           ),
+  //           keyboardType: TextInputType.emailAddress,
+  //           validator: EmailValidator.validateEmail,
+  //           onSaved: (String value) => setState(() => email = value)),
+  //     );
+  //
+  // Widget buildPassword() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(
+  //           color: Colors.grey,
+  //         ),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: TextFormField(
+  //         decoration: InputDecoration(
+  //           labelText: 'Enter Your Password',
+  //           border: InputBorder.none,
+  //           icon: Icon(Icons.lock),
+  //         ),
+  //         obscureText: true,
+  //         validator: PasswordValidator.validatePassword,
+  //         onSaved: (value) => setState(() => password = value),
+  //       ),
+  //     );
 
-  Widget buildPassword() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: TextFormField(
-          decoration: InputDecoration(
-            labelText: 'Enter Your Password',
-            border: InputBorder.none,
-            icon: Icon(Icons.lock),
-          ),
-          obscureText: true,
-          validator: PasswordValidator.validatePassword,
-          onSaved: (value) => setState(() => password = value),
-        ),
-      );
+  // Widget buildPhoneNumber() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(
+  //           color: Colors.grey,
+  //         ),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: TextFormField(
+  //           decoration: InputDecoration(
+  //             labelText: 'Enter Phone Number',
+  //             border: InputBorder.none,
+  //             icon: Icon(Icons.phone),
+  //           ),
+  //           keyboardType: TextInputType.phone,
+  //           validator: (String value) {
+  //             if (value.isEmpty) {
+  //               return 'Phone Number Required !';
+  //             } else if (value.length != 10) {
+  //               return 'Invalid Phone Number Length !';
+  //             }
+  //             return null;
+  //           },
+  //           onSaved: (value) =>
+  //               setState(() => phoneNumber = value.toString().trim())),
+  //     );
+  //
+  // Widget buildGenderDropDownRow() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(color: Colors.grey),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: Row(
+  //         mainAxisSize: MainAxisSize.max,
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: <Widget>[
+  //           Text('Gender:'),
+  //           DropdownButton(
+  //             hint: Text('Select Your Gender:'),
+  //             items: spinnerItems
+  //                 .map(
+  //                   (gender) => DropdownMenuItem(
+  //                     child: Text(gender),
+  //                     value: gender,
+  //                   ),
+  //                 )
+  //                 .toList(),
+  //             value: dropdownValue,
+  //             onChanged: (newValue) => setState(() => dropdownValue = newValue),
+  //           ),
+  //         ],
+  //       ),
+  //     );
 
-  Widget buildPhoneNumber() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-          ),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Enter Phone Number',
-              border: InputBorder.none,
-              icon: Icon(Icons.phone),
-            ),
-            keyboardType: TextInputType.phone,
-            validator: (String value) {
-              if (value.isEmpty) {
-                return 'Phone Number Required !';
-              } else if (value.length != 10) {
-                return 'Invalid Phone Number Length !';
-              }
-              return null;
-            },
-            onSaved: (value) =>
-                setState(() => phoneNumber = value.toString().trim())),
-      );
+  // Widget buildRadioBtnRow() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(color: Colors.grey),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: Row(
+  //         mainAxisSize: MainAxisSize.max,
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: <Widget>[
+  //           Text(
+  //             'Nationality:',
+  //           ),
+  //           buildUgandanRadioBtn(),
+  //           buildOtherOptionRadioBtn(),
+  //         ],
+  //       ),
+  //     );
 
-  Widget buildGenderDropDownRow() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text('Gender:'),
-            DropdownButton(
-              hint: Text('Select Your Gender:'),
-              items: spinnerItems
-                  .map(
-                    (gender) => DropdownMenuItem(
-                      child: Text(gender),
-                      value: gender,
-                    ),
-                  )
-                  .toList(),
-              value: dropdownValue,
-              onChanged: (newValue) => setState(() => dropdownValue = newValue),
-            ),
-          ],
-        ),
-      );
+  // Widget buildOtherOptionRadioBtn() => Row(
+  //       children: <Widget>[
+  //         Text("Other"),
+  //         Radio(
+  //           activeColor: Theme.of(context).primaryColor,
+  //           value: nationality[1],
+  //           groupValue: selectedNationality,
+  //           onChanged: (value) {
+  //             setState(() => selectedNationality = value);
+  //           },
+  //         ),
+  //       ],
+  //     );
+  //
+  // Widget buildUgandanRadioBtn() => Row(
+  //       children: <Widget>[
+  //         Text("Ugandan"),
+  //         Radio(
+  //           activeColor: Theme.of(context).primaryColor,
+  //           value: nationality[0],
+  //           groupValue: selectedNationality,
+  //           onChanged: (value) {
+  //             setState(() => selectedNationality = value);
+  //           },
+  //         ),
+  //       ],
+  //     );
+  //
+  // Widget buildCheckBoxRow() => Container(
+  //       decoration: BoxDecoration(
+  //         border: Border.all(color: Colors.grey),
+  //         borderRadius: BorderRadius.circular(4),
+  //       ),
+  //       child: Row(
+  //         mainAxisSize: MainAxisSize.max,
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: <Widget>[
+  //           Text(
+  //             "Social Media:",
+  //             style: new TextStyle(color: Colors.black),
+  //           ),
+  //           buildFaceBookRow(),
+  //           buildLinkedInRow(),
+  //         ],
+  //       ),
+  //     );
+  //
+  // Widget buildFaceBookRow() => Row(
+  //       mainAxisSize: MainAxisSize.max,
+  //       children: <Widget>[
+  //         Text(
+  //           'FaceBook',
+  //           style: new TextStyle(color: Colors.black),
+  //         ),
+  //         Checkbox(
+  //           activeColor: Colors.blue,
+  //           value: _isCheckedFb,
+  //           onChanged: (bool value) =>
+  //               setState(() => _isCheckedFb = !_isCheckedFb),
+  //         ),
+  //       ],
+  //     );
 
-  Widget buildRadioBtnRow() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              'Nationality:',
-            ),
-            buildUgandanRadioBtn(),
-            buildOtherOptionRadioBtn(),
-          ],
-        ),
-      );
-
-  Widget buildOtherOptionRadioBtn() => Row(
-        children: <Widget>[
-          Text("Other"),
-          Radio(
-            activeColor: Theme.of(context).primaryColor,
-            value: nationality[1],
-            groupValue: selectedNationality,
-            onChanged: (value) {
-              setState(() => selectedNationality = value);
-            },
-          ),
-        ],
-      );
-
-  Widget buildUgandanRadioBtn() => Row(
-        children: <Widget>[
-          Text("Ugandan"),
-          Radio(
-            activeColor: Theme.of(context).primaryColor,
-            value: nationality[0],
-            groupValue: selectedNationality,
-            onChanged: (value) {
-              setState(() => selectedNationality = value);
-            },
-          ),
-        ],
-      );
-
-  Widget buildCheckBoxRow() => Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              "Social Media:",
-              style: new TextStyle(color: Colors.black),
-            ),
-            buildFaceBookRow(),
-            buildLinkedInRow(),
-          ],
-        ),
-      );
-
-  Widget buildFaceBookRow() => Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(
-            'FaceBook',
-            style: new TextStyle(color: Colors.black),
-          ),
-          Checkbox(
-            activeColor: Colors.blue,
-            value: _isCheckedFb,
-            onChanged: (bool value) =>
-                setState(() => _isCheckedFb = !_isCheckedFb),
-          ),
-        ],
-      );
-
-  Widget buildLinkedInRow() => Row(
-        children: <Widget>[
-          Text(
-            "LinkedIn",
-            style: new TextStyle(color: Colors.black),
-          ),
-          Checkbox(
-            activeColor: Colors.blue,
-            value: _isCheckedLn,
-            onChanged: (bool value) =>
-                setState(() => _isCheckedLn = !_isCheckedLn),
-          ),
-        ],
-      );
+  // Widget buildLinkedInRow() => Row(
+  //       children: <Widget>[
+  //         Text(
+  //           "LinkedIn",
+  //           style: new TextStyle(color: Colors.black),
+  //         ),
+  //         Checkbox(
+  //           activeColor: Colors.blue,
+  //           value: _isCheckedLn,
+  //           onChanged: (bool value) =>
+  //               setState(() => _isCheckedLn = !_isCheckedLn),
+  //         ),
+  //       ],
+  //     );
 
   Widget buildHomePageTitle() => Container(
         margin: const EdgeInsets.all(8),
@@ -253,14 +253,12 @@ class _FormScreenState extends State<MyHomePage> {
 
   Widget buildSubmitButton() => Container(
         margin: const EdgeInsets.all(8),
-        child: RaisedButton(
-          color: Colors.grey,
-          textColor: Colors.black,
+        child: ElevatedButton(
           onPressed: () {
-            if (!_formKey.currentState.validate()) {
+            if (!_formKey.currentState!.validate()) {
               return;
             }
-            _formKey.currentState.save();
+            _formKey.currentState?.save();
             print(selectedNationality);
             print(email);
             print(dropdownValue.toUpperCase());
@@ -335,7 +333,7 @@ class _FormScreenState extends State<MyHomePage> {
           key: _formKey,
           autovalidateMode: AutovalidateMode.disabled,
           onChanged: () {
-            Form.of(primaryFocus.context).save();
+            // Form.of(primaryFocus.context).save();
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -348,27 +346,27 @@ class _FormScreenState extends State<MyHomePage> {
                         text: 'USER REG FORM',
                       ),
                     ),
-                    Expanded(
-                      child: buildUserName(),
-                    ),
-                    Expanded(
-                      child: buildEmail(),
-                    ),
-                    Expanded(
-                      child: buildPhoneNumber(),
-                    ),
-                    Expanded(
-                      child: buildPassword(),
-                    ),
-                    Expanded(
-                      child: buildGenderDropDownRow(),
-                    ),
-                    Expanded(
-                      child: buildRadioBtnRow(),
-                    ),
-                    Expanded(
-                      child: buildCheckBoxRow(),
-                    ),
+                    // Expanded(
+                    //   child: buildUserName(),
+                    // ),
+                    // Expanded(
+                    //   child: buildEmail(),
+                    // ),
+                    // Expanded(
+                    //   child: buildPhoneNumber(),
+                    // ),
+                    // Expanded(
+                    //   child: buildPassword(),
+                    // ),
+                    // Expanded(
+                    //   child: buildGenderDropDownRow(),
+                    // ),
+                    // Expanded(
+                    //   child: buildRadioBtnRow(),
+                    // ),
+                    // Expanded(
+                    //   child: buildCheckBoxRow(),
+                    // ),
                     Expanded(
                       child: buildFileUploader(),
                     ),

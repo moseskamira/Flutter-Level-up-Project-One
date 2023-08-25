@@ -1,5 +1,5 @@
 class EmailValidator {
-  static String validateEmail(String value) {
+  static String? validateEmail(String value) {
     if (value.isEmpty) {
       return 'userEmail Required !';
     } else if (!RegExp(
@@ -12,7 +12,7 @@ class EmailValidator {
 }
 
 class UserNameValidator {
-  static String validateUserName(String value) {
+  static String? validateUserName(String value) {
     if (value.isEmpty) {
       return 'UserName Required!';
     } else if (value.length < 3) {
@@ -23,7 +23,7 @@ class UserNameValidator {
 }
 
 class PasswordValidator {
-  static String validatePassword(String value) {
+  static String? validatePassword(String value) {
     if (value.isEmpty) {
       return 'Password Required !';
     } else if (value.length < 5) {

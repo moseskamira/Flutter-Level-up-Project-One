@@ -4,7 +4,7 @@ import 'package:myFlutterApp/models/user_model.dart';
 class UserDetailsWidget extends StatelessWidget {
   final User user;
 
-  UserDetailsWidget({Key key, @required this.user}) : super(key: key);
+  UserDetailsWidget({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,12 @@ class UserDetailsWidget extends StatelessWidget {
         children: <Widget>[
           Container(
             child: Image(
-              image: NetworkImage(user.profileImage),
+              image: NetworkImage('${user.profileImage}'),
             ),
           ),
           Container(
             child: Text(
-              user.userName,
+              '${user.userName}',
               textAlign: TextAlign.start,
               style: TextStyle(
                   fontFamily: 'Aleo',
@@ -46,7 +46,7 @@ class UserDetailsWidget extends StatelessWidget {
           ),
           Container(
             child: Text(
-              user.userType,
+              '${user.userType}',
               textAlign: TextAlign.start,
               style: TextStyle(
                   fontFamily: 'Aleo',

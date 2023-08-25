@@ -4,7 +4,7 @@ class PageTitleText extends StatelessWidget {
   final String titleText;
   final Color textColor;
 
-  PageTitleText({@required this.titleText, @required this.textColor});
+  PageTitleText({required this.titleText, required this.textColor});
 
   @override
   Widget build(BuildContext context) {

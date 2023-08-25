@@ -6,7 +6,7 @@ import 'package:myFlutterApp/widgets/user_details_widget.dart';
 class DetailScreen extends StatelessWidget {
   final User detailedUser;
 
-  DetailScreen({Key key, @required this.detailedUser}) : super(key: key);
+  DetailScreen({Key? key, required this.detailedUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
