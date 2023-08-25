@@ -1,63 +1,31 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'user_model.g.dart';
+
+@JsonSerializable()
 class User {
-  static const USERID = "id";
-  static const USERNAME = "login";
-  static const PROFILEURL = "url";
-  static const PROFILEIMAGE = "avatar_url";
-  static const USERTYPE = "type";
+  int? id;
 
-  int _id;
-  String _userName, _profileUrl, _profileImage, _userType;
+  @JsonKey(name: 'login')
+  String? userName;
 
-  int get id => _id;
+  @JsonKey(name: 'url')
+  String? profileUrl;
 
-  String get userName => _userName;
+  @JsonKey(name: 'avatar_url')
+  String? profileImage;
 
-  String get profileUrl => _profileUrl;
+  @JsonKey(name: 'type')
+  String? userType;
 
-  String get profileImage => _profileImage;
+  User(
+      {this.id,
+      this.profileImage,
+      this.profileUrl,
+      this.userName,
+      this.userType});
 
-  String get userType => _userType;
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  User({
-    int id,
-    String userName,
-    String profileUrl,
-    String profileImage,
-    String userType,
-  }) {
-    _id = id;
-    _userName = userName;
-    _profileUrl = profileUrl;
-    _profileImage = profileImage;
-    _userType = userType;
-  }
-
-  User.fromJsonConverter(Map<String, dynamic> user)
-      : _id = user[USERID],
-        _userName = user[USERNAME],
-        _profileUrl = user[PROFILEURL],
-        _profileImage = user[PROFILEIMAGE],
-        _userType = user[USERTYPE];
-
-  Map<String, dynamic> toJsonConverter() {
-    return {
-      User.USERNAME: userName,
-      User.PROFILEIMAGE: profileImage,
-      User.USERTYPE: userType,
-      User.PROFILEURL: profileUrl,
-      User.USERID: id,
-    };
-  }
-
-  @override
-  String toString() {
-    return '''
-        _id: $_id,
-        _userName: $_userName,
-        _profileUrl: $_profileUrl,
-        _profileImage: $_profileImage,
-        _userType: $_userType
-        
-        ''';
-  }
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }

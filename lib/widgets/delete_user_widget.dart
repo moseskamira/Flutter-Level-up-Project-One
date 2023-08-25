@@ -26,8 +26,7 @@ class DeleteUser extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  FlatButton(
-                    color: Colors.red,
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },
@@ -36,8 +35,7 @@ class DeleteUser extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  FlatButton(
-                    color: Colors.grey,
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
